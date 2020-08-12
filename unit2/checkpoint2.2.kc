@@ -57,6 +57,8 @@ void syscallD(){}
 void syscallE(){}
 void syscallF(){}
 void syscall10(){}
+void syscall11(){}
+void syscall12(){}
 void syscall13(){}
 void syscall14(){}
 void syscall15(){}
@@ -122,9 +124,80 @@ const char NOP = 0xea;
 
 export struct SysCall[] SYSCALLS = {
    {JMP, &syscall1, NOP},
-   {JMP, &syscall2, NOP}
-   };
+   {JMP, &syscall2, NOP},
+   {JMP, &syscall0, NOP},
+   {JMP, &syscall3, NOP},
+   {JMP, &syscall4, NOP},
+   {JMP, &syscall5, NOP},
+   {JMP, &syscall6, NOP},
+   {JMP, &syscall7, NOP},
+   {JMP, &syscall8, NOP},
+   {JMP, &syscall9, NOP},
+   {JMP, &syscallA, NOP},
+   {JMP, &syscallB, NOP},
+   {JMP, &syscallC, NOP},
+   {JMP, &syscallD, NOP},
+   {JMP, &syscallE, NOP},
+   {JMP, &syscallF, NOP},
+   {JMP, &syscall10, NOP},
+   {JMP, &syscall11, NOP},
+   {JMP, &syscall12, NOP},
+   {JMP, &syscall13, NOP},
+   {JMP, &syscall14, NOP},
+   {JMP, &syscall15, NOP},
+   {JMP, &syscall16, NOP},
+   {JMP, &syscall17, NOP},
+   {JMP, &syscall18, NOP},
+   {JMP, &syscall19, NOP},
+   {JMP, &syscall1A, NOP},
+   {JMP, &syscall1B, NOP},
+   {JMP, &syscall1C, NOP},
+   {JMP, &syscall1D, NOP},
+   {JMP, &syscall1E, NOP},
+   {JMP, &syscall1F, NOP},
+   {JMP, &syscall20, NOP},
+   {JMP, &syscall21, NOP},
+   {JMP, &syscall22, NOP},
+   {JMP, &syscall23, NOP},
+   {JMP, &syscall24, NOP},
+   {JMP, &syscall25, NOP},
+   {JMP, &syscall26, NOP},
+   {JMP, &syscall27, NOP},
+   {JMP, &syscall28, NOP},
+   {JMP, &syscall29, NOP},
+   {JMP, &syscall2A, NOP},
+   {JMP, &syscall2B, NOP},
+   {JMP, &syscall2C, NOP},
+   {JMP, &syscall2D, NOP},
+   {JMP, &syscall2E, NOP},
+   {JMP, &syscall2F, NOP},
+   {JMP, &syscall30, NOP},
+   {JMP, &syscall31, NOP},
+   {JMP, &syscall32, NOP},
+   {JMP, &syscall33, NOP},
+   {JMP, &syscall34, NOP},
+   {JMP, &syscall35, NOP},
+   {JMP, &syscall36, NOP},
+   {JMP, &syscall37, NOP},
+   {JMP, &syscall38, NOP},
+   {JMP, &syscall39, NOP},
+   {JMP, &syscall3A, NOP},
+   {JMP, &syscall3B, NOP},
+   {JMP, &syscall3C, NOP},
+   {JMP, &syscall3D, NOP},
+   {JMP, &syscall3E, NOP},
+   {JMP, &syscall3F, NOP}
+};
    
 export align(0x100) struct SysCall[] TRAPS = {
-   {JMP, &main, NOP}
+   {JMP, &main, NOP},
+   {JMP, &reset, NOP},
+   {JMP, &pagfault, NOP},
+   {JMP, &restorkey, NOP},
+   {JMP, &alttabkey, NOP},
+   {JMP, &vf011rd, NOP},
+   {JMP, &vf011wr, NOP},
+   {JMP, &reserved, NOP},
+   {JMP, &cpukil, NOP}
+
 };
