@@ -10,29 +10,9 @@ const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
 
-char[] MESSAGE = "checkpoint2.2 by lin0385";
+char[] MESSAGE = "checkpoint2.3 by lin0385";
 
-void main(){
-
-  *VIC_MEMORY = 0x14;
-  memset(SCREEN, ' ', 40*25);
-  memset(COLS, WHITE, 40*25);
-  
-  char* sc = SCREEN+40;
-  char* msg = MESSAGE;
-
-  while(*msg){
-    *sc++ = *msg++;
-  }
-
-  while(true){
-    if(*RASTER==52||*RASTER==66){
-      *BGCOL=WHITE;
-    }else{
-      *BGCOL=BLACK;
-    }
-  }
-}
+void main(){}
 
 void syscall1(){
   *(SCREEN+79) = '>';
@@ -100,7 +80,28 @@ void syscall3B(){exit_hypervisor();}
 void syscall3C(){exit_hypervisor();}
 void syscall3D(){exit_hypervisor();}
 void syscall3F(){exit_hypervisor();}
-void reset(){exit_hypervisor();}
+void reset(){
+
+  *VIC_MEMORY = 0x14;
+  memset(SCREEN, ' ', 40*25);
+  memset(COLS, WHITE, 40*25);
+  
+  char* sc = SCREEN+40;
+  char* msg = MESSAGE;
+
+  while(*msg){
+    *sc++ = *msg++;
+  }
+
+  while(true){
+    if(*RASTER==52||*RASTER==66){
+      *BGCOL=WHITE;
+    }else{
+      *BGCOL=BLACK;
+    }
+  }
+  exit_hypervisor();
+}
 void pagfault(){exit_hypervisor();}
 void restorkey(){exit_hypervisor();}
 void alttabkey(){exit_hypervisor();}
