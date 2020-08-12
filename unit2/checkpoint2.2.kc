@@ -1,0 +1,127 @@
+import "string"
+
+#pragma link("mega65hyper.ld")
+
+const char* RASTER = 0xd012;
+const char* VIC_MEMORY = 0xd018;
+const char* SCREEN = 0x0400;
+const char* BGCOL = 0xd021;
+const char* COLS = 0xd800;
+const char BLACK = 0;
+const char WHITE = 1;
+
+char[] MESSAGE = "checkpoint2.2 by lin0385";
+
+void main(){
+
+  *VIC_MEMORY = 0x14;
+  memset(SCREEN, ' ', 40*25);
+  memset(COLS, WHITE, 40*25);
+  
+  char* sc = SCREEN+40;
+  char* msg = MESSAGE;
+
+  while(*msg){
+    *sc++ = *msg++;
+  }
+
+  while(true){
+    if(*RASTER==52||*RASTER==66){
+      *BGCOL=WHITE;
+    }else{
+      *BGCOL=BLACK;
+    }
+  }
+}
+
+void syscall1(){
+  *(SCREEN+79) = '>';
+}
+
+void syscall2(){
+  *(SCREEN+78) = '<';
+}
+
+void syscall3(){exit_hypervisor();}
+void syscall4(){exit_hypervisor();}
+void syscall5(){exit_hypervisor();}
+void syscall6(){exit_hypervisor();}
+void syscall7(){exit_hypervisor();}
+void syscall8(){exit_hypervisor();}
+void syscall9(){exit_hypervisor();}
+void syscallA(){exit_hypervisor();}
+void syscallB(){exit_hypervisor();}
+void syscallC(){exit_hypervisor();}
+void syscallD(){exit_hypervisor();}
+void syscallE(){exit_hypervisor();}
+void syscallF(){exit_hypervisor();}
+void syscall10(){exit_hypervisor();}
+void syscall11(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall13(){exit_hypervisor();}
+void syscall14(){exit_hypervisor();}
+void syscall15(){exit_hypervisor();}
+void syscall16(){exit_hypervisor();}
+void syscall17(){exit_hypervisor();}
+void syscall18(){exit_hypervisor();}
+void syscall19(){exit_hypervisor();}
+void syscall1A(){exit_hypervisor();}
+void syscall1B(){exit_hypervisor();}
+void syscall1C(){exit_hypervisor();}
+void syscall1D(){exit_hypervisor();}
+void syscall1E(){exit_hypervisor();}
+void syscall1F(){exit_hypervisor();}
+void syscall20(){exit_hypervisor();}
+void syscall21(){exit_hypervisor();}
+void syscall22(){exit_hypervisor();}
+void syscall23(){exit_hypervisor();}
+void syscall24(){exit_hypervisor();}
+void syscall25(){exit_hypervisor();}
+void syscall26(){exit_hypervisor();}
+void syscall27(){exit_hypervisor();}
+void syscall28(){exit_hypervisor();}
+void syscall29(){exit_hypervisor();}
+void syscall2A(){exit_hypervisor();}
+void syscall2B(){exit_hypervisor();}
+void syscall2C(){exit_hypervisor();}
+void syscall2D(){exit_hypervisor();}
+void syscall2F(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall10(){exit_hypervisor();}
+void syscall11(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+void syscall12(){exit_hypervisor();}
+
+
+
+#pragma data_seg(Syscall) 
+
+struct SysCall{
+  char xjmp;
+  void()* syscall;
+  char xnop;
+};   
+
+const char JMP = 0x4c;
+const char NOP = 0xea;
+
+export struct SysCall[] SYSCALLS = {
+   {JMP, &syscall1, NOP},
+   {JMP, &syscall2, NOP}
+   };
+   
+export align(0x100) struct SysCall[] SYSCALL_RESET = {
+   {JMP, &main, NOP}
+};
