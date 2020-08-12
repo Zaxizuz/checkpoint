@@ -42,6 +42,7 @@ void syscall2(){
   *(SCREEN+78) = '<';
 }
 
+void syscall0(){exit_hypervisor();}
 void syscall3(){exit_hypervisor();}
 void syscall4(){exit_hypervisor();}
 void syscall5(){exit_hypervisor();}
@@ -56,8 +57,6 @@ void syscallD(){exit_hypervisor();}
 void syscallE(){exit_hypervisor();}
 void syscallF(){exit_hypervisor();}
 void syscall10(){exit_hypervisor();}
-void syscall11(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
 void syscall13(){exit_hypervisor();}
 void syscall14(){exit_hypervisor();}
 void syscall15(){exit_hypervisor();}
@@ -86,23 +85,30 @@ void syscall2B(){exit_hypervisor();}
 void syscall2C(){exit_hypervisor();}
 void syscall2D(){exit_hypervisor();}
 void syscall2F(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall10(){exit_hypervisor();}
-void syscall11(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
+void syscall30(){exit_hypervisor();}
+void syscall31(){exit_hypervisor();}
+void syscall32(){exit_hypervisor();}
+void syscall32(){exit_hypervisor();}
+void syscall34(){exit_hypervisor();}
+void syscall35(){exit_hypervisor();}
+void syscall36(){exit_hypervisor();}
+void syscall37(){exit_hypervisor();}
+void syscall38(){exit_hypervisor();}
+void syscall39(){exit_hypervisor();}
+void syscall3A(){exit_hypervisor();}
+void syscall3B(){exit_hypervisor();}
+void syscall3C(){exit_hypervisor();}
+void syscall3D(){exit_hypervisor();}
+void syscall3F(){exit_hypervisor();}
+void reset(){exit_hypervisor();}
+void pagfault(){exit_hypervisor();}
+void restorkey(){exit_hypervisor();}
+void alttabkey(){exit_hypervisor();}
+void vf011rd(){exit_hypervisor();}
+void vf011wr(){exit_hypervisor();}
+void reserved(){exit_hypervisor();}
+void cpukil(){exit_hypervisor();}
+
 
 
 
@@ -120,8 +126,14 @@ const char NOP = 0xea;
 export struct SysCall[] SYSCALLS = {
    {JMP, &syscall1, NOP},
    {JMP, &syscall2, NOP}
+   {JMP, &syscall2, NOP}
+   {JMP, &syscall2, NOP}
+   {JMP, &syscall2, NOP}
+   {JMP, &syscall2, NOP}
+   {JMP, &syscall2, NOP}
+   
    };
    
-export align(0x100) struct SysCall[] SYSCALL_RESET = {
+export align(0x100) struct SysCall[] TRAP = {
    {JMP, &main, NOP}
 };
