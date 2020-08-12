@@ -88,7 +88,7 @@ void syscall2F(){exit_hypervisor();}
 void syscall30(){exit_hypervisor();}
 void syscall31(){exit_hypervisor();}
 void syscall32(){exit_hypervisor();}
-void syscall32(){exit_hypervisor();}
+void syscall33(){exit_hypervisor();}
 void syscall34(){exit_hypervisor();}
 void syscall35(){exit_hypervisor();}
 void syscall36(){exit_hypervisor();}
@@ -109,8 +109,11 @@ void vf011wr(){exit_hypervisor();}
 void reserved(){exit_hypervisor();}
 void cpukil(){exit_hypervisor();}
 
+void exit_hypervisor(){
 
+*(unsigned char*)$D67F = $01;
 
+}
 
 #pragma data_seg(Syscall) 
 
@@ -126,14 +129,8 @@ const char NOP = 0xea;
 export struct SysCall[] SYSCALLS = {
    {JMP, &syscall1, NOP},
    {JMP, &syscall2, NOP}
-   {JMP, &syscall2, NOP}
-   {JMP, &syscall2, NOP}
-   {JMP, &syscall2, NOP}
-   {JMP, &syscall2, NOP}
-   {JMP, &syscall2, NOP}
-   
    };
    
-export align(0x100) struct SysCall[] TRAP = {
+export align(0x100) struct SysCall[] SYSCALL_RESET = {
    {JMP, &main, NOP}
 };
