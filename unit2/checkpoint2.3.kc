@@ -12,16 +12,8 @@ const char WHITE = 1;
 
 char[] MESSAGE = "checkpoint2.3 by lin0385";
 
-void main(){}
-
-void syscall1(){
-  *(SCREEN+79) = '>';
-}
-
-void syscall2(){
-  *(SCREEN+78) = '<';
-}
-
+void syscall1(){exit_hypervisor();}
+void syscall2(){exit_hypervisor();}
 void syscall3(){exit_hypervisor();}
 void syscall4(){exit_hypervisor();}
 void syscall5(){exit_hypervisor();}
@@ -30,8 +22,8 @@ void syscall7(){exit_hypervisor();}
 void syscall8(){exit_hypervisor();}
 void syscall9(){exit_hypervisor();}
 void syscall10(){exit_hypervisor();}
-void syscall11(){exit_hypervisor();}
-void syscall12(){exit_hypervisor();}
+void securentr(){exit_hypervisor();}
+void securexit(){exit_hypervisor();}
 void syscall13(){exit_hypervisor();}
 void syscall14(){exit_hypervisor();}
 void syscall15(){exit_hypervisor();}
@@ -106,12 +98,13 @@ void reset(){
   }
   exit_hypervisor();
 }
+
 void pagfault(){exit_hypervisor();}
 void restorkey(){exit_hypervisor();}
 void alttabkey(){exit_hypervisor();}
 void vf011rd(){exit_hypervisor();}
 void vf011wr(){exit_hypervisor();}
-void reserved(){exit_hypervisor();}
+void reserved(){undefined_trap;}
 void cpukil(){exit_hypervisor();}
 
 void exit_hypervisor(){
@@ -119,6 +112,8 @@ void exit_hypervisor(){
 *(unsigned char*)$D67F = $01;
 
 }
+
+void main(){}
 
 #pragma data_seg(Syscall) 
 
@@ -133,9 +128,79 @@ const char NOP = 0xea;
 
 export struct SysCall[] SYSCALLS = {
    {JMP, &syscall1, NOP},
-   {JMP, &syscall2, NOP}
-   };
+   {JMP, &syscall2, NOP},
+   {JMP, &syscall3, NOP},
+   {JMP, &syscall4, NOP},
+   {JMP, &syscall5, NOP},
+   {JMP, &syscall6, NOP},
+   {JMP, &syscall7, NOP},
+   {JMP, &syscall8, NOP},
+   {JMP, &syscall9, NOP},
+   {JMP, &syscall10, NOP},
+   {JMP, &securentr, NOP},
+   {JMP, &securexit, NOP}, 
+   {JMP, &syscall13, NOP},
+   {JMP, &syscall14, NOP},
+   {JMP, &syscall15, NOP},
+   {JMP, &syscall16, NOP},
+   {JMP, &syscall17, NOP},
+   {JMP, &syscall18, NOP},
+   {JMP, &syscall19, NOP},
+   {JMP, &syscall20, NOP},
+   {JMP, &syscall21, NOP},
+   {JMP, &syscall22, NOP},
+   {JMP, &syscall23, NOP},
+   {JMP, &syscall24, NOP},
+   {JMP, &syscall25, NOP},
+   {JMP, &syscall26, NOP},
+   {JMP, &syscall27, NOP},
+   {JMP, &syscall28, NOP},
+   {JMP, &syscall29, NOP},
+   {JMP, &syscall30, NOP},
+   {JMP, &syscall31, NOP},
+   {JMP, &syscall32, NOP},
+   {JMP, &syscall33, NOP},
+   {JMP, &syscall34, NOP},
+   {JMP, &syscall35, NOP},
+   {JMP, &syscall36, NOP},
+   {JMP, &syscall37, NOP},
+   {JMP, &syscall38, NOP},
+   {JMP, &syscall39, NOP},
+   {JMP, &syscall40, NOP},
+   {JMP, &syscall41, NOP},
+   {JMP, &syscall42, NOP},
+   {JMP, &syscall43, NOP},
+   {JMP, &syscall44, NOP},
+   {JMP, &syscall45, NOP},
+   {JMP, &syscall46, NOP},
+   {JMP, &syscall47, NOP},
+   {JMP, &syscall48, NOP},
+   {JMP, &syscall49, NOP},
+   {JMP, &syscall50, NOP},
+   {JMP, &syscall51, NOP},
+   {JMP, &syscall52, NOP},
+   {JMP, &syscall53, NOP},
+   {JMP, &syscall54, NOP},
+   {JMP, &syscall55, NOP},
+   {JMP, &syscall56, NOP},
+   {JMP, &syscall57, NOP},
+   {JMP, &syscall58, NOP},
+   {JMP, &syscall59, NOP},
+   {JMP, &syscall60, NOP},
+   {JMP, &syscall61, NOP},
+   {JMP, &syscall62, NOP},
+   {JMP, &syscall63, NOP},
+   {JMP, &syscall64, NOP}
+};
    
-export align(0x100) struct SysCall[] SYSCALL_RESET = {
-   {JMP, &main, NOP}
+export align(0x100) struct SysCall[] TRAPS = {
+   {JMP, &reset, NOP},
+   {JMP, &pagfault, NOP},
+   {JMP, &restorkey, NOP},
+   {JMP, &alttabkey, NOP},
+   {JMP, &vf011rd, NOP},
+   {JMP, &vf011wr, NOP},
+   {JMP, &reserved, NOP},
+   {JMP, &cpukil, NOP}
+   
 };
