@@ -129,9 +129,9 @@ void print_to_screen(char *message){
   char* msg = message;
 
   while(*msg){
-    *position = *current_screen_line + current_screen_x;
     *position = *msg;
     current_screen_x = current_screen_x + 1; 
+    *position = *current_screen_line + current_screen_x;
   }
 }
 // Go to nextline for checkpoint3.1
