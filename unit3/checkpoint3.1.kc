@@ -17,7 +17,7 @@ const char WHITE = 1;
 
 //Some text to display
 char[] MESSAGE = "Lin0385 operating system starting...";
-char[] MESSAGE = "testing hardware";
+char[] MESSAGE2 = "testing hardware";
 
 //SYSCALL handlers
 void syscall1(){exit_hypervisor();}
@@ -92,7 +92,7 @@ void reset(){
   
   print_to_screen(MESSAGE);
   print_newline();
-  print_to_screen();
+  print_to_screen(MESSAGE2);
   
   while(true){
     if(*RASTER==52||*RASTER==66){
@@ -121,7 +121,7 @@ void exit_hypervisor(){
 //Definition for checkpoint3.1
 unsigned char *current_screen_line = $0400;
 unsigned char current_screen_x = 0;
-
+unsigned char *position = $0400;
 
 // Print message for checkpoint3.1
 void print_to_screen(char *message){
@@ -129,14 +129,15 @@ void print_to_screen(char *message){
   char* msg = message;
 
   while(*msg){
-    *current_screen_line + *current_screen_x = *msg;
-    *current_screen_x = *current_screen_x + 1; 
+    *position = *current_screen_line + current_screen_x;
+    *position = *msg;
+    current_screen_x = current_screen_x + 1; 
   }
 }
 // Go to nextline for checkpoint3.1
 void print_newline(){
-   *current_screen_line = *current_screen_line+40;
-   *current_screen_x = 0;
+   *current_screen_line = *current_screen_line + 40;
+   current_screen_x = 0;
    
 } 
 
