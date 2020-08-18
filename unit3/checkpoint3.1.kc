@@ -98,7 +98,8 @@ void reset(){
     if(*RASTER==52||*RASTER==66){
       *BGCOL=WHITE;
     }else{
-
+      *BGCOL=BLACK;
+    }
   }
   exit_hypervisor();
 }
