@@ -119,14 +119,14 @@ void exit_hypervisor(){
 }
 
 //Definition for checkpoint3.1
-unsigned char *current_screen_line = $0400 + 40;
+unsigned char *current_screen_line = $0400;
 unsigned char current_screen_x = 0;
-unsigned char *position = $0400 + 40;
+unsigned char *position = $0400;
 
 // Print message for checkpoint3.1
 void print_to_screen(char *message){
   
-  char* msg = message;
+  char *msg = message;
 
   while(*msg){
     *position = *msg;
