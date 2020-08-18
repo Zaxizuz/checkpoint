@@ -94,13 +94,6 @@ void reset(){
   print_newline();
   print_to_screen(MESSAGE2);
   
-  while(true){
-    if(*RASTER==52||*RASTER==66){
-      *BGCOL=WHITE;
-    }else{
-      *BGCOL=BLACK;
-    }
-  }
   exit_hypervisor();
 }
 
