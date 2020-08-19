@@ -22,8 +22,8 @@ unsigned short mem_end = $8000;
 //Some text to display
 char[] MESSAGE = "Lin0385 operating system starting...";
 char[] MESSAGE2 = "testing hardware";
-char[] MESSAGE3 = "memory found at ";
-char[] MESSAGE4 = " - ";
+char[] MESSAGE3 = "memory found at $";
+char[] MESSAGE4 = " - $";
 char[] MESSAGE5 = "finished testing hardware";
 char[] MESSAGE99 = "memory error at";
 
@@ -131,16 +131,16 @@ void exit_hypervisor(){
 void test_memory(){
 
 volatile unsigned char *p;
-unsigned int byte;
+unsigned int bit;
 byte flag = 0;
 
 for (p=$0800;p<$8000;p++){
-   for (byte=0;byte<=255;byte++){
-         *p = byte;
-         if (*p!=byte){
+   for (bit=0;bit<=255;bit++){
+         *p = p;
+         if (*p!=p){
             flag =1;
             print_to_screen(MESSAGE99);
-            print_hex((unsigned char)*p);
+            print_hex((unsigned short)*p);
             print_newline();
          }  
          if (flag=1) break;
