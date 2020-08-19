@@ -107,6 +107,8 @@ void reset(){
   print_hex(mem_start);
   print_to_screen(MESSAGE4);
   print_hex(mem_end);
+  print_to_screen(MESSAGE5);
+  
   exit_hypervisor();
 }
 
