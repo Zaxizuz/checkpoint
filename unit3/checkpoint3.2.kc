@@ -15,9 +15,17 @@ const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
 
+//Global definitions for checkpoint 3.2
+unsigned short mem_start = $0800;
+unsigned short mem_end = $8000;
+
 //Some text to display
 char[] MESSAGE = "Lin0385 operating system starting...";
 char[] MESSAGE2 = "testing hardware";
+char[] MESSAGE3 = "Memory found at";
+char[] MESSAGE4 = " - ";
+char[] MESSAGE5 = "finished testing hardware";
+char[] MESSAGE99 = "memory error at";
 
 //SYSCALL handlers
 void syscall1(){exit_hypervisor();}
@@ -93,7 +101,12 @@ void reset(){
   print_to_screen(MESSAGE);
   print_newline();
   print_to_screen(MESSAGE2);
+  print_newline();
   test_memory();
+  print_to_screen(MESSAGE3);
+  print_hex(mem_start);
+  print_to_screen(MESSAGE4);
+  print_hex(mem_end);
   exit_hypervisor();
 }
 
@@ -114,12 +127,25 @@ void exit_hypervisor(){
 //function for checkpoint3.2
 void test_memory(){
 
-unsigned short mem_start = $0800;
-unsigned short mem_end = $8000;
+volatile unsigned char *p;
+unsigned int bit;
+byte flag = 0;
 
+for (p=$0800;p<$8000;p++){
+   for (bit=0;bit<=255;bit++){
+         *p = 1;
+         if (*p!=1){
+            flag =1;
+            print_to_screen(MESSAGE99);
+            print_hex((unsigned char)*p);
+            print_newline();
+         }  
+         if (flag=1) break;
+  }
+}
 }
 
-//function print_hex for checkpoint3.2
+//function showing hexadecimal numbers for checkpoint3.2
 void print_hex(unsigned short value){
 
    char[5] hex;
