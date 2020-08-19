@@ -136,7 +136,7 @@ byte flag = 0;
 
 for (p=$0800;p<$8000;p++){
    for (bit=0;bit<=255;bit++){
-         *p = p;
+         *p = &p;
          if (*p!=p){
             flag =1;
             print_to_screen(MESSAGE99);
