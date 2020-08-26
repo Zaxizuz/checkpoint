@@ -104,9 +104,7 @@ void reset(){
   
   // checkpoint3.3
   detect_devices();
-  print_to_screen("finished probing for devices");
-  
-  
+
   exit_hypervisor();
 }
 
@@ -165,8 +163,13 @@ void detect_devices(){
   volatile unsigned short *add;
   
   for (add=$D000;add<=$DFF0;add+=$10){
-     detect_vicii(*add);
+     if (detect_vicii(*add)==1){
+        print_to_screen("vic-ii detected at $");
+        print_hex(add);
+        print_newline();
+     }
   }
+  print_to_screen("finished probing for devices");
 }
 
 // function for checkpoint3.3
@@ -177,19 +180,17 @@ char detect_vicii(unsigned short address){
   unsigned short i;
   unsigned char result;
   
-  v1= p2[$12]; //Read start address +$12
+  v1= (p2+$12); //Read start address +$12
   for (i=1;i<1000;i++) continue;
-  v2= p2[$12]; //Read again
+  v2= (p2+$12); //Read again
   
   if (v2>v1){
-     print_to_screen("vicii found at $" + address);
-     print_newline();
+  
      result = 1; 
   }
   if (v2<v1){
      result = 0;   
   }
-  print_to_screen("testing...");
   return result;
 }
 
