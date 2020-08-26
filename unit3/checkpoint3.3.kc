@@ -165,7 +165,7 @@ void detect_devices(){
   for (add=$D000;add<=$DFF0;add+=$10){
      if (detect_vicii(*add)==1){
         print_to_screen("vic-ii detected at $");
-        print_hex(add);
+        print_hex((unsigned short)add);
         print_newline();
      }
   }
