@@ -15,10 +15,6 @@ const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
 
-//Global definitions for checkpoint 3.2
-unsigned short* mem_start = $0800;
-unsigned short* mem_end = $8000;
-
 //Some text to display
 char[] MESSAGE = "Lin0385 operating system starting...";
 char[] MESSAGE2 = "testing hardware";
@@ -105,14 +101,6 @@ void reset(){
   print_to_screen(MESSAGE2);
   print_newline();
   
-  // checkpoint3.2
-  //test_memory();
-  //print_to_screen(MESSAGE3);
-  //print_hex((unsigned short)mem_start);
-  //print_to_screen(MESSAGE4);
-  //print_hex((unsigned short)mem_end);
-  //print_newline();
-  //print_to_screen(MESSAGE5);
   
   // checkpoint3.3
   detect_devices();
