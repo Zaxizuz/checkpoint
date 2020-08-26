@@ -22,7 +22,6 @@ char[] MESSAGE3 = "memory found at $";
 char[] MESSAGE4 = " - $";
 char[] MESSAGE5 = "finished testing hardware";
 char[] MESSAGE99 = "memory error at";
-char[] MESSAGETEST = "1";
 
 //SYSCALL handlers
 void syscall1(){exit_hypervisor();}
