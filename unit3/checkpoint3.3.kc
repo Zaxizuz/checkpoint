@@ -98,17 +98,24 @@ void reset(){
   memset(SCREEN, ' ', 40*25);
   memset(COLS, WHITE, 40*25);
   
+  // checkpoint3.2 &checkpoint3.3
   print_to_screen(MESSAGE);
   print_newline();
   print_to_screen(MESSAGE2);
   print_newline();
-  test_memory();
-  print_to_screen(MESSAGE3);
-  print_hex((unsigned short)mem_start);
-  print_to_screen(MESSAGE4);
-  print_hex((unsigned short)mem_end);
-  print_newline();
-  print_to_screen(MESSAGE5);
+  
+  // checkpoint3.2
+  //test_memory();
+  //print_to_screen(MESSAGE3);
+  //print_hex((unsigned short)mem_start);
+  //print_to_screen(MESSAGE4);
+  //print_hex((unsigned short)mem_end);
+  //print_newline();
+  //print_to_screen(MESSAGE5);
+  
+  // checkpoint3.3
+  
+  
   
   exit_hypervisor();
 }
@@ -130,12 +137,12 @@ void exit_hypervisor(){
 //function for checkpoint3.2
 void test_memory(){
 
-volatile unsigned char* p;
-unsigned char bit;
-byte flag = 0;
+  volatile unsigned char* p;
+  unsigned char bit;
+  byte flag = 0;
 
-for (p=$0800;p<$8000;p++){
-   for (bit=0;bit<=255;bit++){
+  for (p=$0800;p<$8000;p++){
+    for (bit=0;bit<=255;bit++){
          *p = bit;
          if (*p!=bit){
             flag =1;
@@ -146,6 +153,41 @@ for (p=$0800;p<$8000;p++){
          if (flag=1) break;
   }
 }
+}
+
+//function for checkpoint3.3
+
+void detect_devices(){
+  volatile unsigned short* add;
+  
+  for (add=$D000;add<=$DFF0;add+=$10){
+     detect_vicii(*add);
+  
+  }
+  print_to_screen("finished probing for devices");
+}
+
+// function for checkpoint3.3
+char detect_vicii(unsigned short address){
+
+  volatile unsigned char* p2 = address;
+  unsigned char v1,v2;
+  unsigned short i;
+  unsigned char result;
+  
+  v1=p2[$12]; //Read start address +$12
+  for (i=1;i<1000;i++) continue;
+  v2=p2[$12]; //Read again
+  
+  if (v2>v1){
+     print_to_screen("vicii found at $" + address);
+     result = 1; 
+  }
+  if (v2<v1){
+     print_to_screen("vicii found at $" + address);
+     result = 0;   
+  }
+  return result;
 }
 
 //function showing hexadecimal numbers for checkpoint3.2
