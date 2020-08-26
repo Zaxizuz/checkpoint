@@ -175,16 +175,15 @@ char detect_vicii(unsigned short address){
   unsigned short i;
   unsigned char result;
   
-  v1=p2[$12]; //Read start address +$12
+  v1= p2[$12]; //Read start address +$12
   for (i=1;i<1000;i++) continue;
-  v2=p2[$12]; //Read again
+  v2= p2[$12]; //Read again
   
   if (v2>v1){
      print_to_screen("vicii found at $" + address);
      result = 1; 
   }
   if (v2<v1){
-     print_to_screen("vicii found at $" + address);
      result = 0;   
   }
   return result;
