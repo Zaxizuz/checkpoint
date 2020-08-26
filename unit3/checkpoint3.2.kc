@@ -145,8 +145,8 @@ void test_memory(){
          }  
          
      }
-  if (flag==1) break;
-  mem_end = p;
+     if (flag==1) break;
+     mem_end = p;
 }
 }
 
