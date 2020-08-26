@@ -130,7 +130,7 @@ void exit_hypervisor(){
 
 void test_memory(){
 
-  volatile unsigned char* p;
+  volatile unsigned char *p;
   char i;
   byte flag = 0;
   
