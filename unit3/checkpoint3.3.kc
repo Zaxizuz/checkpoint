@@ -165,7 +165,7 @@ void detect_devices(){
   volatile unsigned short *add;
   
   for (add=$D000;add<=$DFF0;add+=$10){
-     detect_vicii(add);
+     detect_vicii(*add);
   }
 }
 
