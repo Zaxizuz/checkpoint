@@ -189,6 +189,7 @@ char detect_vicii(unsigned short address){
   if (v2<v1){
      result = 0;   
   }
+  print_to_screen("testing...");
   return result;
 }
 
