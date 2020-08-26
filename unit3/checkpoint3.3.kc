@@ -163,7 +163,6 @@ void detect_devices(){
   
   for (add=$D000;add<=$DFF0;add+=$10){
      detect_vicii(*add);
-     print_newline();
   }
 }
 
@@ -181,6 +180,7 @@ char detect_vicii(unsigned short address){
   
   if (v2>v1){
      print_to_screen("vicii found at $" + address);
+     print_newline();
      result = 1; 
   }
   if (v2<v1){
