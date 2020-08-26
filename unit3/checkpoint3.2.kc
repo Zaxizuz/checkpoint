@@ -99,12 +99,7 @@ void reset(){
   print_to_screen(MESSAGE2);
   print_newline();
   test_memory();
-  print_to_screen(MESSAGE3);
-  print_hex((unsigned short)mem_start);
-  print_to_screen(MESSAGE4);
-  print_hex((unsigned short)mem_end);
-  print_newline();
-  print_to_screen(MESSAGE5);
+
   
   exit_hypervisor();
 }
@@ -148,6 +143,13 @@ void test_memory(){
      if (flag==1) break;
      mem_end = p;
 }
+  print_to_screen(MESSAGE3);
+  print_hex((unsigned short)mem_start);
+  print_to_screen(MESSAGE4);
+  print_hex((unsigned short)mem_end);
+  print_newline();
+  print_to_screen(MESSAGE5);
+
 }
 
 //function showing hexadecimal numbers for checkpoint3.2
