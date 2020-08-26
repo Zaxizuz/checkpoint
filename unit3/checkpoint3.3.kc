@@ -163,7 +163,7 @@ void detect_devices(){
   
   for (add=$D000;add<=$DFF0;add+=$10){
      detect_vicii(*add);
-  
+     print_newline();
   }
 }
 
