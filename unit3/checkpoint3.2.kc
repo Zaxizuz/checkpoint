@@ -135,7 +135,7 @@ void test_memory(){
   byte flag = 0;
 
   for (p=$0800;p<$8000;p++){
-    for (byte 1=0;i<=255;i++){
+    for (byte i=0;i<=255;i++){
          *p = 1;
          if (*p!=1){
             flag =1;
@@ -145,11 +145,11 @@ void test_memory(){
             break;
          }  
          
-  }
+     }
   if (flag==1) break;
   mem_end = p;
 }
-
+}
 //function showing hexadecimal numbers for checkpoint3.2
 void print_hex(unsigned short value){
 
