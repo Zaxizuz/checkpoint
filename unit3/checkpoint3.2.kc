@@ -131,6 +131,7 @@ void test_memory(){
   for (p=$0800;p<$8000;p++){
     for (i=0;i<=255;i++){
          *p = i;
+         print_to_scren("1");
          if (*p!=i){
             flag =1;
             print_to_screen(MESSAGE99);
