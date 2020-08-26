@@ -123,13 +123,13 @@ void exit_hypervisor(){
 void test_memory(){
 
   // definitions for checkpoint 3.2
-  unsigned short* mem_start = $0800;
-  unsigned short* mem_end = $0800;
+  unsigned short mem_start = $0800;
+  unsigned short mem_end = $0800;
   volatile unsigned char *p;
   byte flag = 0;
   
-  for (p=$0800;p<=$7FFF;p++){
-    for (byte i=0;i<=255;i++){
+  for (p=$0800;p<$8000;p++){
+    for (byte i=0;i<255;i++){
          *p = i;
 
          if (*p!=i){
