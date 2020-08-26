@@ -142,7 +142,7 @@ void test_memory(){
          
      }
      if (flag==1) break;
-     mem_end = p;
+     mem_end = (unsigned short)p;
   }
   
   print_to_screen(MESSAGE3);
