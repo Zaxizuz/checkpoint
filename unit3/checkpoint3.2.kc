@@ -131,10 +131,11 @@ void exit_hypervisor(){
 void test_memory(){
 
   volatile unsigned char* p;
+  char i;
   byte flag = 0;
-
+  
   for (p=$0800;p<$8000;p++){
-    for (byte i=0;i<=255;i++){
+    for (i=0;i<=255;i++){
          *p = i;
          if (*p!=i){
             flag =1;
