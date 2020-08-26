@@ -27,6 +27,7 @@ char[] MESSAGE4 = " - $";
 char[] MESSAGE5 = "finished testing hardware";
 char[] MESSAGE99 = "memory error at";
 
+
 //SYSCALL handlers
 void syscall1(){exit_hypervisor();}
 void syscall2(){exit_hypervisor();}
@@ -138,14 +139,17 @@ void exit_hypervisor(){
 //function for checkpoint3.2
 void test_memory(){
 
-  volatile unsigned char* p;
-  unsigned char bit;
+  // definitions for checkpoint 3.2
+  unsigned short mem_start = $0800;
+  unsigned short mem_end = $0800;
+  volatile unsigned char *p;
   byte flag = 0;
-
+  
   for (p=$0800;p<$8000;p++){
-    for (byte 1=0;i<=255;i++){
-         *p = 1;
-         if (*p!=1){
+    for (byte i=0;i<255;i++){
+         *p = i;
+
+         if (*p!=i){
             flag =1;
             print_to_screen(MESSAGE99);
             print_hex((unsigned short)p);
@@ -153,19 +157,27 @@ void test_memory(){
             break;
          }  
          
+     }
+     if (flag==1) break;
+     mem_end = (unsigned short)p;
   }
-  if (flag==1) break;
-  mem_end = p;
-}
+  
+  print_to_screen(MESSAGE3);
+  print_hex((unsigned short)mem_start);
+  print_to_screen(MESSAGE4);
+  print_hex((unsigned short)mem_end);
+  print_newline();
+  print_to_screen(MESSAGE5);
+
 }
 
 //function for checkpoint3.3
 
 void detect_devices(){
-  volatile unsigned short* add;
+  volatile unsigned short add;
   
   for (add=$D000;add<=$DFF0;add+=$10){
-     detect_vicii(*add);
+     detect_vicii(add);
   }
 }
 
