@@ -127,7 +127,7 @@ void exit_hypervisor(){
 
 }
 
-//function for checkpoint3.2
+
 void test_memory(){
 
   volatile unsigned char* p;
