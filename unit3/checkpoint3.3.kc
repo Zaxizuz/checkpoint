@@ -174,7 +174,7 @@ void test_memory(){
 //function for checkpoint3.3
 
 void detect_devices(){
-  volatile unsigned short add;
+  volatile unsigned short *add;
   
   for (add=$D000;add<=$DFF0;add+=$10){
      detect_vicii(add);
