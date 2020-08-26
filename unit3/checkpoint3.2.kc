@@ -150,6 +150,7 @@ void test_memory(){
   mem_end = p;
 }
 }
+
 //function showing hexadecimal numbers for checkpoint3.2
 void print_hex(unsigned short value){
 
