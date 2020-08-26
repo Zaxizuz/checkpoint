@@ -169,7 +169,7 @@ void detect_devices(){
 // function for checkpoint3.3
 char detect_vicii(unsigned short address){
 
-  volatile unsigned char* p2 = address;
+  volatile unsigned char *p2 = address;
   unsigned char v1,v2;
   unsigned short i;
   unsigned char result;
