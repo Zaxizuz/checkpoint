@@ -130,22 +130,24 @@ void exit_hypervisor(){
 //function for checkpoint3.2
 void test_memory(){
 
-volatile unsigned char* p;
-unsigned char bit;
-byte flag = 0;
+  volatile unsigned char* p;
+  unsigned char bit;
+  byte flag = 0;
 
-for (p=$0800;p<$8000;p++){
-   for (bit=0;bit<=255;bit++){
-         *p = bit;
-         if (*p!=bit){
+  for (p=$0800;p<$8000;p++){
+    for (byte 1=0;i<=255;i++){
+         *p = 1;
+         if (*p!=1){
             flag =1;
             print_to_screen(MESSAGE99);
             print_hex((unsigned short)p);
             print_newline();
+            break;
          }  
-         if (flag=1) break;
+         
   }
-}
+  if (flag==1) break;
+  mem_end = p;
 }
 
 //function showing hexadecimal numbers for checkpoint3.2
