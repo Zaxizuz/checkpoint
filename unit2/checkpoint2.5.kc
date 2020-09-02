@@ -88,7 +88,11 @@ void reset(){
 
   *VIC_MEMORY = 0x14;
   memset(SCREEN, ' ', 40*25);
-  memset(COLS, WHITE, 40*25);
+  for (unsigned int i=0;i<1000;i++){
+    char j;
+    j = (char)(i-(i/16)*16);
+    *(COLS+i)=j;
+  }
   
   char* sc = SCREEN+40;
   char* msg = MESSAGE;
@@ -97,13 +101,6 @@ void reset(){
     *sc++ = *msg++;
   }
 
-  while(true){
-    if(*RASTER==52||*RASTER==66){
-      *BGCOL=RED;
-    }else{
-      *BGCOL=BLACK;
-    }
-  }
   exit_hypervisor();
 }
 
