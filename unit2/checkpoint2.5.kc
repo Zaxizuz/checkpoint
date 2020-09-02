@@ -14,9 +14,10 @@ const char* BGCOL = 0xd021;
 const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
+const char RED = 2;
 
 //Some text to display
-char[] MESSAGE = "checkpoint2.5 by lin0385";
+char[] MESSAGE = "checkpoint2.3 by lin0385";
 
 //SYSCALL handlers
 void syscall1(){exit_hypervisor();}
@@ -88,7 +89,7 @@ void reset(){
   *VIC_MEMORY = 0x14;
   memset(SCREEN, ' ', 40*25);
   memset(COLS, WHITE, 40*25);
-
+  
   char* sc = SCREEN+40;
   char* msg = MESSAGE;
 
@@ -98,7 +99,7 @@ void reset(){
 
   while(true){
     if(*RASTER==52||*RASTER==66){
-      *BGCOL=WHITE;
+      *BGCOL=RED;
     }else{
       *BGCOL=BLACK;
     }
