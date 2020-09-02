@@ -88,19 +88,25 @@ void reset(){
 
   *VIC_MEMORY = 0x14;
   memset(SCREEN, ' ', 40*25);
+  
+  // setting colour for each address
   for (unsigned int i=0;i<1000;i++){
     char j;
     j = (char)(i-(i/16)*16);
     *(COLS+i)=j;
   }
   
+  // scrolling text
+  
   char* sc = SCREEN+40;
-  char* msg = MESSAGE;
-
-  while(*msg){
-    *sc++ = *msg++;
+  
+  for (unsigned int k=0;k<1000;k++){
+  	char l;
+  	char m = (char) k/24;
+  	l = (char)(k-m*24);
+    *(sc+k) = (char) MESSAGE[l];
+  	
   }
-
   exit_hypervisor();
 }
 
