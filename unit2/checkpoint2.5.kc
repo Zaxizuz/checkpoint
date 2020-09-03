@@ -91,14 +91,22 @@ void reset(){
   char* sc = SCREEN+40;
   
   // setting colour for each address
-  for (unsigned char k=0;k<100;k++){
-  	for (unsigned int i=0;i<1000;i++){
+  for (unsigned int k=0;k<1000;k++){
+  	for (unsigned int i=k;i<1000;i= i+30){
     	char j;
     	j = (char)(i-(i/16)*16);
     	*(COLS+i)=j;
-    	*(sc+i) = '@';
-      
-      for  (unsigned char l=0;l<200;l++){
+      sc = SCREEN+40;
+      //for (unsigned int j=0;j<i;j++){
+      //*(sc+j) = ' '; 
+      //}
+      *(sc+i) = '!';
+      //for (unsigned int k=(i+1);k<1000;k++){
+      //sc = SCREEN+40;
+      //*(sc+k) = '!';
+      //}
+      //*(sc+1000) = ' ';
+      for  (unsigned char l=0;l<60;l++){
     		for (unsigned int m=1;m<1000;m++) continue;
       }
   	}
