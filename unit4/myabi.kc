@@ -19,3 +19,16 @@ void call_syscall01(){
 	asm { nop }
 
 } 
+void print_string(char[] message){
+	enable_syscalls();
+	*(unsigned char*)$D642 = $01;
+	
+	char* sc = $03FF;
+  char* msg = message;
+
+  while(*msg){
+    *sc++ = *msg++;
+  }
+
+	asm { nop }
+}
