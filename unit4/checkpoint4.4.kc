@@ -54,8 +54,8 @@ void syscall01(){
 }
 void syscall02(){
   print_newline();
-  unsigned char *temp = $03FF;  
-  while (temp != 0){
+  unsigned char *temp = $0300;  
+  while (*temp){
   	print_to_screen(temp);
   	temp = temp+1;
   }	
