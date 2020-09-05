@@ -23,7 +23,7 @@ void print_string(char[] message){
 	enable_syscalls();
 	*(unsigned char*)$D642 = $01;
 	
-	char* sc = $03FF;
+	char* sc = $0300;
   char* msg = message;
 
   while(*msg){
