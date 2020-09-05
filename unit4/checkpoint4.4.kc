@@ -54,6 +54,7 @@ void syscall01(){
 }
 void syscall02(){
   print_newline();
+  print_to_screen("test");
   char[256] messageFromUser;
   volatile unsigned char *q = $0300;
   for (byte r=0;r<=255;r++){
