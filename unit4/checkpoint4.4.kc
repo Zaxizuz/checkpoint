@@ -54,11 +54,12 @@ void syscall01(){
 }
 void syscall02(){
   print_newline();
-  unsigned char *temp = $0300;  
-  while (*temp){
-  	print_to_screen(temp);
-  	temp = temp+1;
-  }	
+  char[256] messageFromUser;
+  volatile unsigned char *q = $0300;
+  for (byte r=0;r<=255;r++){
+  	messageFromUser[r] = *(q+r);  
+  }
+  print_to_screen(messageFromUser);
 	exit_hypervisor();
 }
 void syscall03(){exit_hypervisor();}
