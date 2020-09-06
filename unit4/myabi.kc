@@ -28,9 +28,9 @@ void call_syscall02(){
 	asm { nop }
 }
  
-void print_string(char *message){	
+void print_string(unsigned char *message){	
 	
-  unsigned short *q = $0300;
+  volatile unsigned char *q = $0300;
   while (*message){
    *q++ = *message++;
   }
