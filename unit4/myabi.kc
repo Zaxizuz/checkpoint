@@ -29,11 +29,8 @@ void call_syscall02(){
 }
  
 void print_string(unsigned char *message){	
-	
-  char *location = $0300;
-  char *input = location;
-  while(*message){
-  	*input++ = *message;
+	while(*message){
+  *(unsinged char*)$0300++ = *message++;
   }
 	call_syscall02();
 
