@@ -44,10 +44,16 @@ void print_string(unsigned char *message){
 	//	*(location + i) = *message++;
 	//	i++;
 	//}
-	while (message){
+	//while (message){
+	//	*(location+i) = message[i];
+	//	i++;
+	//}
+	
+	for (i=0;i<256;i++){
 		*(location+i) = message[i];
-		i++;
 	}
+	
+	
 	call_syscall02();
 
 }
