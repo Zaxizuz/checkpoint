@@ -30,13 +30,18 @@ void call_syscall02(){
  
 void print_string(unsigned char *message){	
 	
-	*(unsigned char *)$0300 = *message;
-	*(unsigned char *)$0301 = 't';
-	*(unsigned char *)$0302 = 'e';
-	*(unsigned char *)$0303 = 's';
-	*(unsigned char *)$0304 = 't';
-	*(unsigned char *)$0305 = message[2];
-	*(unsigned char *)$0306 = message[255];
+	//*(unsigned char *)$0300 = *message;
+	//*(unsigned char *)$0301 = 't';
+	//*(unsigned char *)$0302 = 'e';
+	//*(unsigned char *)$0303 = 's';
+	//*(unsigned char *)$0304 = 't';
+	//*(unsigned char *)$0305 = message[2];
+	//*(unsigned char *)$0306 = message[255];
+	
+	unsigned char *location = $0300;
+	for (byte i=0;i<256,i++){
+		*(location + i)=message[i];
+	}
 	
 	
 	call_syscall02();
