@@ -1,4 +1,3 @@
-import "stdio"
 import "string"
 
 void enable_syscalls(){
