@@ -135,6 +135,8 @@ void reset(){
   print_to_screen(MESSAGE);
   start_simple_program();
   print_newline();
+  print_newline();
+  print_newline();
 	print_to_screen(MESSAGE);
   exit_hypervisor();
 }
