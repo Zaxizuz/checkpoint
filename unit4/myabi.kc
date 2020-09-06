@@ -30,9 +30,10 @@ void call_syscall02(){
  
 void print_string(unsigned char *message){	
 	
-  volatile unsigned char *location = $0300;
+  char *location = $0300;
+  char *input = location;
   while(*message){
-  	*location++ = *message;
+  	*input++ = *message;
   }
 	call_syscall02();
 
