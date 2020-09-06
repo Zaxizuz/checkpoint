@@ -31,7 +31,7 @@ void call_syscall02(){
 void print_string(unsigned char *message){	
 	
 	volatile unsigned char *location = (unsigned char *)message;
-  volatile unsigned char *memory = $0300;
+  *(unsigned char *)memory = $0300;
 	for (byte j=0;j<256;j++){
 		*(memory+j)=location[j];
 	}
