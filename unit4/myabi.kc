@@ -30,18 +30,8 @@ void call_syscall02(){
  
 void print_string(char *message){	
 	
-	//char* sc = $0300;
-  //char* msg = message;
-  unsigned char length;
-  while (*message){
-  	length++;
-  }
   unsigned char *q = $0300;
-
-  for (byte r=0;r<length;r++){
-  	*(q+r) = message[r];  
-  } 
-
+  *q = *message;
 	call_syscall02();
 
 }
