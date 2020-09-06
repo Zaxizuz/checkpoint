@@ -39,7 +39,7 @@ void print_string(unsigned char *message){
 	//*(unsigned char *)$0306 = message[255];
 	
 	unsigned char *location = $0300;
-	unsigned char i = 0;
+	unsigned char i = $0;
 	//while (*message){
 	//	*(location + i) = *message++;
 	//	i++;
@@ -50,7 +50,7 @@ void print_string(unsigned char *message){
 	//}
 	
 	for (i=0;i<256;i++){
-		*(location+i) = *message[i];
+		*(location+i) = message[i];
 	}
 	
 	
