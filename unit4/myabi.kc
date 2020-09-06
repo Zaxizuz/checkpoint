@@ -31,7 +31,9 @@ void call_syscall02(){
 void print_string(char *message){	
 	
   unsigned char *q = $0300;
-  *(unsigned char *)$0300 = *message;
+  while (*message){
+   *q++ = *message++;
+  }
 	call_syscall02();
 
 }
