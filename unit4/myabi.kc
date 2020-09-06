@@ -31,8 +31,10 @@ void call_syscall02(){
 void print_string(unsigned char *message){	
 	
 	*(unsigned char *)$0300 = *message;
-	*(unsigned char *)$0301 = *message[1];
-
+	*(unsigned char *)$0301 = "t";
+	*(unsigned char *)$0302 = "e";
+	*(unsigned char *)$0303 = "s";
+	*(unsigned char *)$0304 = "t";
 	call_syscall02();
 
 }
