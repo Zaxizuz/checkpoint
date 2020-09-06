@@ -49,8 +49,8 @@ void print_string(unsigned char *message){
 	//	i++;
 	//}
 	
-	while (message{
-		*(location+i) = message++;
+	while (*message){
+		*(location+i) = *message++;
 		i++;
 	}
 	
