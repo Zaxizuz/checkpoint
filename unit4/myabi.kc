@@ -49,9 +49,8 @@ void print_string(unsigned char *message){
 	//	i++;
 	//}
 	
-	while (*message){
-		*(location+i) = (byte)message++;
-		i++;
+	for (i=0;i<256;i++){
+		*(location+i) = message[i];
 	}
 	
 	
