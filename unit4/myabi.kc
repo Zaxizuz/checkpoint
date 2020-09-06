@@ -23,6 +23,7 @@ void print_string(char[] message){
 	char* sc = $0300;
   char* msg = message;
 
+  *sc = 
   while(*msg){
     *sc++ = *msg++;
   }
