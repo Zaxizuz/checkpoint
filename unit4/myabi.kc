@@ -21,20 +21,29 @@ void call_syscall01(){
 	asm { nop }
 
 } 
-void print_string(char* message){	
-	char* sc = $0300;
+void print_string(){	
+	//char* sc = $0300;
   //char* msg = message;
-  unsigned char length;
-  while (*message){
-    length++;
-  }
-  unsigned char *q = $0300;
-  for (byte r=0;r<length;r++){
-  	*(q+r) = message[r];  
-  }
+  //unsigned char length;
+  //while (*message){
+  //  length++;
+  //}
+  //unsigned char *q = $0300;
+  //for (byte r=0;r<length;r++){
+  //	*(q+r) = message[r];  
+  //}
   //while(*msg){
   //  *sc++ = *msg++;
   //}
+  
+  *(unsigned char *)$0300 = $80;
+	*(unsigned char *)$0301 = $00;
+	*(unsigned char *)$0302 = $81;
+	*(unsigned char *)$0303 = $00;
+	*(unsigned char *)$0304 = $00;	
+	*(unsigned char *)$0305 = $00;
+	*(unsigned char *)$0306 = $00;
+  
   enable_syscalls();
 	*(unsigned char*)$D642 = $01;
 	asm { nop }
