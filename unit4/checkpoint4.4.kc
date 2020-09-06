@@ -55,7 +55,7 @@ void syscall01(){
 void syscall02(){
   print_newline();
   char[256] messageFromUser;
-  *(unsigned char *)q = $0300;
+  unsigned char *q = $0300;
   for (byte r=0;r<=255;r++){
   	messageFromUser[r] = *(q+r);  
   }
