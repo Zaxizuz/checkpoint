@@ -3,7 +3,7 @@ import "myabi"
 void main(){
   //call_syscall00();
   //call_syscall01();
-  char[] MESSAGE = "printed via print string api"; 
-  print_string(MESSAGE);
+  //char[] MESSAGE = "printed via print string api"; 
+  print_string();
   while(true) continue;
 }
