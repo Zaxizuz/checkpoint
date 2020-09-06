@@ -136,7 +136,7 @@ void reset(){
   start_simple_program();
   print_newline();
   (unsigned char *)t = $0300;
-  print_to_screen(*t);
+  print_to_screen(t);
   exit_hypervisor();
 }
 
