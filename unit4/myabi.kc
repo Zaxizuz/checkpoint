@@ -39,8 +39,9 @@ void print_string(unsigned char *message){
 	//*(unsigned char *)$0306 = message[255];
 	
 	unsigned char *location = $0300;
-	for (byte i=0;i<256;i++){
-		*(location + i)=message[i];
+	unsinged char i = 0;
+	for (i=0;i<256;i++){
+		*(location + i) = message[i];
 	}
 	
 	
