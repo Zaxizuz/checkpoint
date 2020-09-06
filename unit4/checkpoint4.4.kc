@@ -54,6 +54,7 @@ void syscall01(){
 }
 void syscall02(){
   print_newline();
+  print_to_screen(MESSAGE);
   char[256] messageFromUser;
   unsigned char *q = $0300;
   for (byte r=0;r<=255;r++){
@@ -134,10 +135,7 @@ void reset(){
   
   print_to_screen(MESSAGE);
   start_simple_program();
-  print_newline();
-  print_newline();
-  print_newline();
-	print_to_screen(MESSAGE);
+	
   exit_hypervisor();
 }
 
