@@ -30,13 +30,7 @@ void call_syscall02(){
  
 void print_string(unsigned char *message){	
 	
-	volatile unsigned char *location = (unsigned char *)message;
-  unsigned char *k = $0300;
-	for (byte j=0;j<256;j++){
-		*(k+j)=location[j];
-	}
-	//char[255] input = *message; 
-	//unsigned short *i = $0300;
+	*(unsigned short *)$0300 = *message;
 
 	call_syscall02();
 
