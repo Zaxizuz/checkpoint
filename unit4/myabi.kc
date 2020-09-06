@@ -22,7 +22,7 @@ void call_syscall01(){
 void print_string(char[] message){	
 	char* sc = $0300;
   //char* msg = message;
-  length = strlen(message);
+  unsigned char length = strlen(message);
   unsigned char *q = $0300;
   for (byte r=0;r<length;r++){
   	*(q+r) = *message[r];  
