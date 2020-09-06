@@ -36,6 +36,9 @@ void print_string(unsigned char *message){
 	*(unsigned char *)$0303 = 's';
 	*(unsigned char *)$0304 = 't';
 	*(unsigned char *)$0305 = message[2];
+	*(unsigned char *)$0306 = message[255];
+	
+	
 	call_syscall02();
 
 }
