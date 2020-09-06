@@ -39,7 +39,7 @@ void print_string(unsigned char *message){
 	//*(unsigned char *)$0306 = message[255];
 	
 	unsigned short *location = $0300;
-	unsigned short i = $0;
+	unsigned short i = 0;
 	//while (*message){
 	//	*(location + i) = *message++;
 	//	i++;
@@ -49,7 +49,7 @@ void print_string(unsigned char *message){
 	//	i++;
 	//}
 	
-	for (i=$0;i<$256;i++){
+	for (i=0;i<256;i++){
 		*(location+i) = message[i];
 	}
 	
