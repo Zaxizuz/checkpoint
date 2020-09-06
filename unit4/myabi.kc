@@ -31,7 +31,7 @@ void call_syscall02(){
 void print_string(unsigned char *message){	
 	
 	unsigned char *location; 
-	*location = $0300;
+	*location = (unsigned char)$0300;
 	while(*message){
   	*location++ = *message++;
   }
