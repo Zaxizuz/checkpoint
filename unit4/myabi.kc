@@ -44,8 +44,9 @@ void print_string(unsigned char *message){
 	//	*(location + i) = *message++;
 	//	i++;
 	//}
-	*location = message[1];
-	
+	while (message){
+	*location++ = message++;
+	}
 	call_syscall02();
 
 }
