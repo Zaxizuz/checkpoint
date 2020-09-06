@@ -30,7 +30,7 @@ void print_string(char* message){
   }
   unsigned char *q = $0300;
   for (byte r=0;r<length;r++){
-  	*(q+r) = *(message[r]);  
+  	*(q+r) = message[r];  
   }
   //while(*msg){
   //  *sc++ = *msg++;
