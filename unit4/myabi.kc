@@ -1,3 +1,5 @@
+import "string"
+
 void enable_syscalls(){
 
  *(unsigned char *)$D02F = $47;
@@ -19,13 +21,16 @@ void call_syscall01(){
 	asm { nop }
 
 } 
-void print_string(char[] message){	
+void print_string(char* message){	
 	char* sc = $0300;
   //char* msg = message;
-  unsigned char length = strlen(message);
+  unsigned char length;
+  while (*message){
+    length++ = *message;
+  }
   unsigned char *q = $0300;
   for (byte r=0;r<length;r++){
-  	*(q+r) = *message[r];  
+  	*(q+r) = *(message[r]);  
   }
   //while(*msg){
   //  *sc++ = *msg++;
