@@ -50,7 +50,7 @@ void print_string(unsigned char *message){
 	//}
 	
 	while (*message){
-		*(location+i) = *message++;
+		*(location+i) = (byte)message++;
 		i++;
 	}
 	
