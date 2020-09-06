@@ -128,7 +128,7 @@ void reset(){
   current_screen_x = 0;
   
   print_to_screen(MESSAGE);
-  start_simple_program();
+  //start_simple_program();
 	
   exit_hypervisor();
 }
