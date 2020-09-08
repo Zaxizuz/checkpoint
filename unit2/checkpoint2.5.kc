@@ -102,7 +102,7 @@ void reset(){
       *(sc+i) = '!';
 
       //slowing down computer
-      for  (unsigned char m=0;m<60;m++){
+      for  (unsigned char m=0;m<30;m++){
     		for (unsigned int l=1;l<1000;l++) continue;
       }
   	}
