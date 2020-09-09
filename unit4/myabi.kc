@@ -40,20 +40,22 @@ void print_string(unsigned char *message){
 	
 	unsigned char *location = $0300;
   unsigned char i = 0;
-	//while (*message){
-	//	*(location + i) = *message++;
-	//	i++;
-	//}
-	//while (message){
-	//	*(location+i) = message[i];
-	//	i++;
-	//}
-	
-	for (i=0;i<256;i++){
-		*(location+i) = (char)message[i];
+	while (*message){
+		*location++= *message++;
 	}
-	
-	
-	call_syscall02();
+  *location = 0; // terminating null at the end of the string, not copied for some reason.	
+	call_syscall02();char
+
+}
+
+void call_syscall03(){
+	enable_syscalls();
+	*(unsigned char*)$D643 = $01;
+  asm { nop }
+
+}
+
+
+char *get_os_version(){
 
 }
