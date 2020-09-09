@@ -157,19 +157,39 @@ void test_memory(){
 
 }
 
-//function for checkpoint3.3
+//function for checkpoint3.3 
+
 
 void detect_devices(){
   volatile unsigned short *add;
   volatile unsigned short *end;
   
   for (add=$D000;add<=$DFF0;add+=$10){
+     //speeding up the detection process
+     if (add == $D800){
+        add = $DC00;
+     }
+     // detecting VIC-II
      if (detect_vicii(add)==$7F){
         print_to_screen("vic-ii detected at $");
         print_hex((unsigned short)add);
         print_to_screen(" -- $");
-        print_hex((unsigned short) add + $7F);
+        // checkpoint3.4
+        add = (unsigned short)add + $7F;
+        print_hex((unsigned short) add);
         print_newline();
+        add = (unsigned short)add + $1;
+     }
+     // detecting MOS 6526 Complex Interface Adapter
+     // checkpoint3.4
+     if (detect_mos6526(add)==$FF){
+        print_to_screen("mos6526 detected at $");
+        print_hex((unsigned short)add);
+        print_to_screen(" -- $");
+        add = (unsigned short)add + $FF;
+        print_hex((unsigned short) add);
+        print_newline();
+        add = (unsigned short)add + $1;
      }
   }
   print_to_screen("finished probing for devices");
@@ -195,6 +215,32 @@ unsigned short detect_vicii(unsigned short* address){
   }
   return result;
 }
+
+//function for checkpoint3.4  // why every time the detected address is different?
+unsigned short detect_mos6526(unsigned short* address){
+
+  volatile unsigned char* p2 = (unsigned char*)address;
+  unsigned char v1,v2,v3;
+  unsigned long i;
+  unsigned short result;
+  
+  v3 = p2[$B]; // Read start address +$B for the hour field
+  if (v3>=$1 || v3<=$23){ 
+  
+  	v1= p2[$9]; //Read start address +$9 for the second field
+  	for (i=1;i<2000001;i++) continue; // after one second
+  	v2= p2[$9]; //Read the second field again
+  
+  	if (v2>v1){
+     	result = $FF; 
+  	}
+  	if (v2<v1){
+     	result = 0;   
+  	}
+  }
+  return result;
+}
+
 
 //function showing hexadecimal numbers for checkpoint3.2
 void print_hex(unsigned short value){
