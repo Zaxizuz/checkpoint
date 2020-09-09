@@ -1,0 +1,5 @@
+import "myabi"
+
+void main(){
+	get_os_version();
+}
