@@ -222,11 +222,11 @@ unsigned short detect_mos6526(unsigned short* address){
   volatile unsigned char* p2 = (unsigned char*)address;
   unsigned char v1,v2,v3;
   unsigned long i;
-  unsigned short result;
+  unsigned short result=0;
   
   v3 = p2[$B]; // Read start address +$B for the hour field
   if (v3>=$1 || v3<=$23){ 
-  
+  	
   	v1= p2[$9]; //Read start address +$9 for the second field
   	for (i=1;i<2000001;i++) continue; // after one second
   	v2= p2[$9]; //Read the second field again
@@ -237,6 +237,7 @@ unsigned short detect_mos6526(unsigned short* address){
   	if (v2<v1){
      	result = 0;   
   	}
+  	
   }
   return result;
 }
