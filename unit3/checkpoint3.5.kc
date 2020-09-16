@@ -140,6 +140,7 @@ void reset(){
   
   // checkpoint3.3
   detect_devices();
+	
 
   exit_hypervisor();
 }
@@ -208,7 +209,7 @@ void detect_devices(){
         //print_hex((unsigned short)add);
         //print_to_screen(" -- $");
         print_to_screen("found vic-ii");
-        
+        print_newline();
         // checkpoint3.4
         add = (unsigned short)add + $7F;
         print_hex((unsigned short) add);
@@ -218,16 +219,26 @@ void detect_devices(){
      // detecting MOS 6526 Complex Interface Adapter
      // checkpoint3.4
      if (detect_mos6526(add)==$FF){
-        print_to_screen("mos6526 detected at $");
-        print_hex((unsigned short)add);
-        print_to_screen(" -- $");
-        add = (unsigned short)add + $FF;
-        print_hex((unsigned short) add);
+        //print_to_screen("mos6526 detected at $");
+        //print_hex((unsigned short)add);
+        //print_to_screen(" -- $");
+        //add = (unsigned short)add + $FF;
+        //print_hex((unsigned short) add);
+        //print_newline();
+        //add = (unsigned short)add + $1;
+        print_to_screen("found mos6526");
         print_newline();
-        add = (unsigned short)add + $1;
      }
   }
   print_to_screen("finished probing for devices");
+  for (int i=0;i<=device_allocation_count;i++){
+  	print_to_screen(device_memory_allocations[i].device_name);
+  	print_to_screen(" at ");
+  	print_to_screen(device_memory_allocations[i].first_address);
+  	print_to_screen(" to ");
+  	print_to_screen(device_memory_allocations[i].last_address);
+  	print_newline();
+  }
 }
 
 // function for checkpoint3.3
@@ -255,26 +266,20 @@ unsigned short detect_vicii(unsigned short* address){
 unsigned short detect_mos6526(unsigned short* address){
 
   volatile unsigned char* p2 = (unsigned char*)address;
-  unsigned char v1,v2,v3;
+  unsigned char v1,v2,v3,v4;
   unsigned long i;
-  unsigned short result=0;
+  unsigned short result=$FF;
   
-  v3 = p2[$B]; // Read start address +$B for the hour field
-  if (v3>=$1 && v3<=$23){ 
-  	
-  	v1= p2[$9]; //Read start address +$9 for the second field
+  v1= p2[$19]; //Read start address +$9 for the second field
+  v3 = p2[$1B]; // Read start address +$B for the hour field
+  if (v3>$0 && v3<$150){ 
   	for (i=1;i<2000001;i++) continue; // after one second
-  	v2= p2[$9]; //Read the second field again
-  
-  	if (v2>v1){
-     	result = $FF; 
-  	}
-  	if (v2<v1){
-     	result = 0;   
-  	}
-  	
+  	v4= p2[$19]; //Read the second field again
+  	if (v4>v1){
+     	return result; 
+  	}  	
   }
-  return result;
+  return 0;
 }
 
 
