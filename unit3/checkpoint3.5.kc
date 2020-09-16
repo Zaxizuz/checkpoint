@@ -30,28 +30,28 @@ struct device_memory_allocation{
 	char* device_name;
 };
 
-device_memory_allocation[16] device_memory_allocations;
+struct device_memory_allocation[16] device_memory_allocations;
 unsigned char device_allocation_count=0; 
 
-void memory_allocation(unsigned short devices){
+void memory_allocation(unsigned short* add, char* device_name){
 
-	if (devices==$7F){
+	if (device_name=="vic-ii"){
 		device_memory_allocations[device_allocation_count].first_address=add;
 		device_memory_allocations[device_allocation_count].last_address=add+$7F;
-		device_memory_allocations[device_allocation_count].device_name=VIC-II;
+		device_memory_allocations[device_allocation_count].device_name=*device_name;
 		device_allocation_count++;
 		device_memory_allocations[device_allocation_count].first_address=add+$100;
 		device_memory_allocations[device_allocation_count].last_address=add+$3FF;
-		device_memory_allocations[device_allocation_count].device_name=VIC-II;
+		device_memory_allocations[device_allocation_count].device_name=*device_name;
 		device_allocation_count++;
 		device_memory_allocations[device_allocation_count].first_address=add+$800;
 		device_memory_allocations[device_allocation_count].last_address=add+$BFF;
-		device_memory_allocations[device_allocation_count].device_name=VIC-II;
+		device_memory_allocations[device_allocation_count].device_name=*device_name;
 		device_allocation_count++;
-	}else if (devices=$FF){
+	}else if (device_name=="mos6526"){
 		device_memory_allocations[device_allocation_count].first_address=add;
 		device_memory_allocations[device_allocation_count].last_address=add+$FF;
-		device_memory_allocations[device_allocation_count].device_name=MOS6526;
+		device_memory_allocations[device_allocation_count].device_name=*device_name;
 		device_allocation_count++;
 	}
 }
@@ -214,7 +214,7 @@ void detect_devices(){
         add = (unsigned short)add + $7F;
         print_hex((unsigned short) add);
         print_newline();
-        add = (unsigned short)add + $1;
+        add = (unsigned short)add + $1;  
      }
      // detecting MOS 6526 Complex Interface Adapter
      // checkpoint3.4
@@ -248,13 +248,16 @@ unsigned short detect_vicii(unsigned short* address){
   unsigned char v1,v2;
   unsigned short i;
   unsigned short result;
+  char[] name_vicii = "vic-ii";
   
   v1= p2[$12]; //Read start address +$12
   for (i=1;i<1000;i++) continue;
   v2= p2[$12]; //Read again
   
   if (v2>v1){
-     result = $7F; 
+     result = $7F;
+     memory_allocation(p2,name_vicii);
+      
   }
   if (v2<v1){
      result = 0;   
@@ -262,13 +265,14 @@ unsigned short detect_vicii(unsigned short* address){
   return result;
 }
 
-//function for checkpoint3.4  // why every time the detected address is different?
+//function for checkpoint3.4 
 unsigned short detect_mos6526(unsigned short* address){
 
   volatile unsigned char* p2 = (unsigned char*)address;
   unsigned char v1,v2,v3,v4;
   unsigned long i;
   unsigned short result=$FF;
+  char[] name_mos6526 = "mos6526";
   
   v1= p2[$19]; //Read start address +$9 for the second field
   v3 = p2[$1B]; // Read start address +$B for the hour field
@@ -277,6 +281,7 @@ unsigned short detect_mos6526(unsigned short* address){
   	v4= p2[$19]; //Read the second field again
   	if (v4>v1){
      	return result; 
+     	memory_allocation(p2,name_mos6526);
   	}  	
   }
   return 0;
