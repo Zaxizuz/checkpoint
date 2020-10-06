@@ -25,30 +25,30 @@ char[] MESSAGE99 = "memory error at";
 
 // checkpoint3.5
 struct device_memory_allocation{
-	unsigned char *first_address;
-	unsigned char *last_address;
-	char* device_name;
+	unsigned short *first_address;
+	unsigned short *last_address;
+	char[] device_name;
 };
 
 export struct device_memory_allocation[16] device_memory_allocations;
 unsigned char device_allocation_count=0; 
 
-void memory_allocation(unsigned char* add, char device_name){
+void memory_allocation(unsigned char* add, char device_detected){
 
-	if (device_name==0){
+	if (device_detected==0){
 		device_memory_allocations[device_allocation_count].first_address=add;
 		device_memory_allocations[device_allocation_count].last_address=add+$7F;
-		device_memory_allocations[device_allocation_count].device_name="VIC-II";
+		device_memory_allocations[device_allocation_count].device_name="vic-ii";
 		device_allocation_count++;
 		device_memory_allocations[device_allocation_count].first_address=add+$100;
 		device_memory_allocations[device_allocation_count].last_address=add+$3FF;
-		device_memory_allocations[device_allocation_count].device_name="VIC-II";
+		device_memory_allocations[device_allocation_count].device_name="vic-ii";
 		device_allocation_count++;
 		device_memory_allocations[device_allocation_count].first_address=add+$800;
 		device_memory_allocations[device_allocation_count].last_address=add+$BFF;
-		device_memory_allocations[device_allocation_count].device_name="VIC-II";
+		device_memory_allocations[device_allocation_count].device_name="vic-ii";
 		device_allocation_count++;
-	}else if (device_name==1){
+	}else if (device_detected==1){
 		device_memory_allocations[device_allocation_count].first_address=add;
 		device_memory_allocations[device_allocation_count].last_address=add+$FF;
 		device_memory_allocations[device_allocation_count].device_name="mos6526";
@@ -231,12 +231,13 @@ void detect_devices(){
      }
   }
   print_to_screen("finished probing for devices");
-  for (unsigned char i=0;i<=device_allocation_count;i++){
+  print_newline();
+  for (unsigned char i=0;i<device_allocation_count;i++){
   	print_to_screen(device_memory_allocations[i].device_name);
   	print_to_screen(" at ");
-  	print_to_screen(device_memory_allocations[i].first_address);
+  	print_hex((unsigned short)device_memory_allocations[i].first_address);
   	print_to_screen(" to ");
-  	print_to_screen(device_memory_allocations[i].last_address);
+  	print_hex((unsigned short)device_memory_allocations[i].last_address);
   	print_newline();
   }
 }
@@ -255,8 +256,8 @@ unsigned short detect_vicii(unsigned short* address){
   v2= p2[$12]; //Read again
   
   if (v2>v1){
-     result = $7F;
      memory_allocation(p2,0);
+     result = $7F;
   }
   if (v2<v1){
      result = 0;   
@@ -279,8 +280,8 @@ unsigned short detect_mos6526(unsigned short* address){
   	for (i=1;i<2000001;i++) continue; // after one second
   	v4= p2[$19]; //Read the second field again
   	if (v4>v1){
-     	return result; 
      	memory_allocation(p2,1);
+     	return result; 
   	}  	
   }
   return 0;
