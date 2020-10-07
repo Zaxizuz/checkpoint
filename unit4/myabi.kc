@@ -27,6 +27,13 @@ void call_syscall02(){
 	*(unsigned char*)$D642 = $01;
 	asm { nop }
 }
+
+void call_syscall03(){
+	enable_syscalls();
+	*(unsigned char*)$D643 = $01;
+  asm { nop }
+
+}
  
 void print_string(unsigned char *message){	
 	
@@ -44,18 +51,29 @@ void print_string(unsigned char *message){
 		*location++= *message++;
 	}
   *location = 0; // terminating null at the end of the string, not copied for some reason.	
-	call_syscall02();char
+	call_syscall02();
 
 }
 
-void call_syscall03(){
-	enable_syscalls();
-	*(unsigned char*)$D643 = $01;
-  asm { nop }
-
+char* get_os_version(){
+  char[256] version;
+  call_syscall03();
+  volatile unsigned char *location =$0300;
+	//while (*location){
+	//	version= version + *location;
+	//	location++;
+	//}
+  char i=0;
+  while (*location){
+  version[i] = *location;
+  i++;
+  location++;
+  }
+  return version;
+  
 }
 
 
-char *get_os_version(){
+//char *get_os_version(){
 
-}
+//}
