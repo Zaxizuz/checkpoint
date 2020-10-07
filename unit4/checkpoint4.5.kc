@@ -19,12 +19,12 @@ volatile unsigned char *current_screen_line;
 volatile unsigned char current_screen_x;
 
 //Some text to display
-char[] MESSAGE = "checkpoint4.4 by lin0385";
+char[] MESSAGE = "checkpoint4.5 by lin0385";
 char[] MESSAGE00 = "syscall00 entered";
 char[] MESSAGE01 = "syscall01 entered";
 
 //os version information
-
+char[256] os_version_return = "pink lake v1.1";
 
 
 // print message
@@ -62,7 +62,14 @@ void syscall02(){
 	exit_hypervisor();
 }
 void syscall03(){
-
+  char *message = os_version_return;
+  unsigned char *location = $0300;
+  
+	while (*message){
+		*location++= *message++;
+	}
+  *location = 0;
+	
 	exit_hypervisor();
 }
 void syscall04(){exit_hypervisor();}
