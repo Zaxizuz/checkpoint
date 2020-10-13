@@ -241,7 +241,8 @@ void exit_hypervisor(){
 *(unsigned char*)$D67F = $01;
 
 }
-    
+
+#pragma data_seg(Syscall)    
 struct SysCall{
   char xjmp;        //Holds $4C, the JMP $nnnn opcode
   void()* syscall;  //Holds handler address, will be the target of the JMP
