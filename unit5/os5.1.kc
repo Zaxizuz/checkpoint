@@ -215,10 +215,6 @@ void reset(){
   print_newline();
   describe_pdb(0);
   
-  while(*msg){
-    *sc++ = *msg++;
-  }
-
   while(true){
     if(*RASTER==52||*RASTER==66){
       *BGCOL=WHITE;

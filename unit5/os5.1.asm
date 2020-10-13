@@ -13,9 +13,12 @@
   .const OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_START_ADDRESS = 4
   .const OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_END_ADDRESS = 8
   .const OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORED_STATE = $c
+  .label RASTER = $d012
   .label VIC_MEMORY = $d018
   .label SCREEN = $400
+  .label BGCOL = $d021
   .label COLS = $d800
+  .const BLACK = 0
   .const WHITE = 1
   // Process stored state will live at $C000-$C7FF, with 256 bytes
   // for each process reserved
@@ -106,8 +109,20 @@ reset: {
     jsr print_newline
     jsr print_newline
     jsr describe_pdb
-    jsr exit_hypervisor
-    rts
+  __b1:
+    lda #$34
+    cmp RASTER
+    beq __b2
+    lda #$42
+    cmp RASTER
+    beq __b2
+    lda #BLACK
+    sta BGCOL
+    jmp __b1
+  __b2:
+    lda #WHITE
+    sta BGCOL
+    jmp __b1
 }
 describe_pdb: {
     .label p = stored_pdbs
