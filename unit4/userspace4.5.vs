@@ -1,0 +1,16 @@
+al C:86c .enable_syscalls
+al C:83d .__b1__0
+al C:884 .__b1__1
+al C:877 .get_os_version
+al C:862 .call_syscall02
+al C:835 .print_string
+al C:99e .call_syscall03
+al C:80b .upstartEnd
+al C:80d .main
+al C:4 .location__0
+al C:6 .location__1
+al C:827 .message__0
+al C:2 .message__1
+al C:84d .__b2__0
+al C:88d .__b2__1
+al C:89e .version
