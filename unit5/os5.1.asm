@@ -75,25 +75,6 @@ pagfault: {
 reset: {
     lda #$14
     sta VIC_MEMORY
-    ldx #' '
-    lda #<SCREEN
-    sta.z memset.str
-    lda #>SCREEN
-    sta.z memset.str+1
-    lda #<$28*$19
-    sta.z memset.num
-    lda #>$28*$19
-    sta.z memset.num+1
-    jsr memset
-    ldx #WHITE
-    lda #<COLS
-    sta.z memset.str
-    lda #>COLS
-    sta.z memset.str+1
-    lda #<$28*$19
-    sta.z memset.num
-    lda #>$28*$19
-    sta.z memset.num+1
     jsr memset
     lda #<MESSAGE
     sta.z print_to_screen.c
@@ -126,7 +107,7 @@ reset: {
 }
 describe_pdb: {
     .label p = stored_pdbs
-    .label n = $d
+    .label n = $b
     .label ss = 5
     lda #<message
     sta.z print_to_screen.c
@@ -387,42 +368,32 @@ print_dhex: {
     rts
 }
 // Copies the character c (an unsigned char) to the first num characters of the object pointed to by the argument str.
-// memset(void* zeropage($b) str, byte register(X) c, word zeropage($d) num)
 memset: {
-    .label end = $d
+    .const num = $28*$19
+    .label str = COLS
+    .label end = str+num
     .label dst = $b
-    .label num = $d
-    .label str = $b
-    lda.z num
-    bne !+
-    lda.z num+1
-    beq __breturn
-  !:
-    lda.z end
-    clc
-    adc.z str
-    sta.z end
-    lda.z end+1
-    adc.z str+1
-    sta.z end+1
-  __b2:
+    lda #<str
+    sta.z dst
+    lda #>str
+    sta.z dst+1
+  __b1:
     lda.z dst+1
-    cmp.z end+1
-    bne __b3
+    cmp #>end
+    bne __b2
     lda.z dst
-    cmp.z end
-    bne __b3
-  __breturn:
+    cmp #<end
+    bne __b2
     rts
-  __b3:
-    txa
+  __b2:
+    lda #WHITE
     ldy #0
     sta (dst),y
     inc.z dst
     bne !+
     inc.z dst+1
   !:
-    jmp __b2
+    jmp __b1
 }
 syscall64: {
     jsr exit_hypervisor
