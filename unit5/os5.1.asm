@@ -26,8 +26,8 @@
   //To save writing 0x4c and 0xEA all the time, we define them as constants
   .const JMP = $4c
   .const NOP = $ea
-  .label current_screen_line = 9
-  .label current_screen_x = 2
+  .label current_screen_line = 8
+  .label current_screen_x = $a
   lda #<SCREEN
   sta.z current_screen_line
   lda #>SCREEN
@@ -99,6 +99,7 @@ reset: {
     sta.z current_screen_line
     lda #>SCREEN
     sta.z current_screen_line+1
+    jsr print_newline
     lda #<MESSAGE
     sta.z print_to_screen.c
     lda #>MESSAGE
@@ -125,7 +126,7 @@ reset: {
 describe_pdb: {
     .label p = stored_pdbs
     .label n = $d
-    .label ss = 3
+    .label ss = 2
     lda #<message
     sta.z print_to_screen.c
     lda #>message
@@ -265,11 +266,11 @@ print_newline: {
     sta.z current_screen_x
     rts
 }
-// print_hex(word zeropage(3) value)
+// print_hex(word zeropage(2) value)
 print_hex: {
     .label __3 = $b
     .label __6 = $d
-    .label value = 3
+    .label value = 2
     ldx #0
   __b1:
     cpx #8
@@ -343,7 +344,7 @@ print_hex: {
 }
 .segment Code
 print_to_screen: {
-    .label c = 3
+    .label c = 2
   __b1:
     ldy #0
     lda (c),y
@@ -362,10 +363,10 @@ print_to_screen: {
   !:
     jmp __b1
 }
-// print_dhex(dword zeropage(5) value)
+// print_dhex(dword zeropage(4) value)
 print_dhex: {
     .label __0 = $f
-    .label value = 5
+    .label value = 4
     lda #0
     sta.z __0+2
     sta.z __0+3
