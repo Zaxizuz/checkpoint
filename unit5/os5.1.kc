@@ -209,12 +209,6 @@ void reset(){
   print_to_screen(MESSAGE);
   print_newline();
   
-  current_screen_line = SCREEN;
-  print_newline();
-  print_newline();
-  print_newline();
-  describe_pdb(0);
-  
   while(true){
     if(*RASTER==52||*RASTER==66){
       *BGCOL=WHITE;
@@ -222,6 +216,12 @@ void reset(){
       *BGCOL=BLUE;
     }
   }
+  
+  current_screen_line = SCREEN;
+  print_newline();
+  print_newline();
+  print_newline();
+  describe_pdb(0);
   
   exit_hypervisor();
 }
