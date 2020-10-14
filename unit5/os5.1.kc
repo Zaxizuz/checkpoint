@@ -207,6 +207,7 @@ void reset(){
   memset(COLS, WHITE, 40*25);
     
   current_screen_line = SCREEN;
+  print_newline();
   print_to_screen(MESSAGE);
   print_newline();
   print_newline();
