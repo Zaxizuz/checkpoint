@@ -20,7 +20,7 @@ Code-segment:
   $8200-$8567 Code
 
 Data-segment:
-  $8568-$85da Data
+  $8568-$85e5 Data
 
 Stack-segment:
 

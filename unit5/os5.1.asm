@@ -680,7 +680,7 @@ syscall1: {
     rts
 }
 .segment Data
-  MESSAGE: .text "checkpoint 5.1"
+  MESSAGE: .text "checkpoint 5.1 by sen lin"
   .byte 0
 .segment Syscall
   //A table of up to 64 SYSCALL handlers expressed in a fairly readable and easy format
