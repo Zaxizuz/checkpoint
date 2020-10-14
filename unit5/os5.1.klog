@@ -14,12 +14,13 @@ Default-segment:
 XMega65Bin-segment:
 
 Syscall-segment:
+  $8000-$811f Syscall
 
 Code-segment:
   $8200-$856a Code
 
 Data-segment:
-  $856b-$871f Data
+  $856b-$85dd Data
 
 Stack-segment:
 

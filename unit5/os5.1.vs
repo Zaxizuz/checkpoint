@@ -3,7 +3,7 @@ al C:851f .syscall19
 al C:821c .pagfault
 al C:852b .syscall16
 al C:8527 .syscall17
-al C:8700 .TRAPS
+al C:8100 .TRAPS
 al C:400 .SCREEN
 al C:8543 .syscall10
 al C:85ca .hex
@@ -44,7 +44,7 @@ al C:8218 .restorkey
 al C:f .__0
 al C:85cf .MESSAGE
 al C:b .__3
-al C:85de .SYSCALLS
+al C:8000 .SYSCALLS
 al C:d .__6
 al C:845c .__breturn
 al C:84eb .syscall32

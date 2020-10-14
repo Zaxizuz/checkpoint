@@ -683,6 +683,7 @@ syscall1: {
 .segment Data
   MESSAGE: .text "checkpoint 5.1"
   .byte 0
+.segment Syscall
   //A table of up to 64 SYSCALL handlers expressed in a fairly readable and easy format
   //Each line is an instance of the struct SysCall from above, with the JMP opcode value
   //the address of the handler routine and the NOP opcode value
