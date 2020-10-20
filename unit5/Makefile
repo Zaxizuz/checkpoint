@@ -28,13 +28,13 @@ os5.1.bin:	os5.1.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<
 
 test5.2:	os5.2.bin packed.bin
-	./check_if_committed && xmega65 -loadrom packed.bin -kickup os5.2.bin
+	xmega65 -loadrom packed.bin -kickup os5.2.bin
 
 os5.2.bin:	os5.2.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<
 
 test5.3:	os5.3.bin packed.bin
-	./check_if_committed && xmega65 -loadrom packed.bin -kickup os5.3.bin
+	xmega65 -loadrom packed.bin -kickup os5.3.bin
 
 os5.3.bin:	os5.3.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<

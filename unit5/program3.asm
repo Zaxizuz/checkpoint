@@ -12,6 +12,8 @@ main: {
   __b1:
     jsr showpid
     jmp __b3
+    program_name: .text "program4.prg"
+    .byte 0
 }
 showpid: {
     jsr enable_syscalls
@@ -35,6 +37,9 @@ yield: {
     rts
 }
 exec: {
+    // XXX - Copy the program_name argument to the transfer area at $0300	
+    lda main.program_name
+    sta $300
     jsr enable_syscalls
     lda #0
     sta $d648

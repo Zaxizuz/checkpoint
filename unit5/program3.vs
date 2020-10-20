@@ -1,9 +1,10 @@
-al C:82d .enable_syscalls
-al C:84c .fork
+al C:83a .enable_syscalls
+al C:85f .fork
 al C:81d .__b1
-al C:823 .showpid
-al C:838 .yield
+al C:830 .showpid
+al C:823 .program_name
+al C:845 .yield
 al C:80b .upstartEnd
 al C:80d .main
 al C:817 .__b3
-al C:842 .exec
+al C:84f .exec
