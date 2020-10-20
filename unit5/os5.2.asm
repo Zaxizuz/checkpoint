@@ -376,8 +376,8 @@ initialise_pdb: {
     jsr next_free_pid
     lda.z next_free_pid.pid
     // Setup process ID
-    //XXX - Call the function next_free_pid() to get a process ID for the
-    //process in this PDB, and store it in p->process_id
+    // Call the function next_free_pid() to get a process ID for the
+    // process in this PDB, and store it in p->process_id
     sta p
     // Setup process name 
     // (32 bytes space for each to fit 16 chars + nul)
@@ -386,12 +386,11 @@ initialise_pdb: {
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_PROCESS_NAME
     lda #>process_names
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_PROCESS_NAME+1
-    //XXX - copy the string in the array 'name' into the array 'p->process_name'
-    /*XXX - To make your life easier, do something like char *pn=p->process_name
-        Then you can just do something along the lines of pn[...]=name[...] 
-        in a loop to copy the name into place.
-        (The arrays are both 17 bytes long)
-  */
+    // copy the string in the array 'name' into the array 'p->process_name'
+    // To make your life easier, do something like char *pn=p->process_name
+    // Then you can just do something along the lines of pn[...]=name[...] 
+    // in a loop to copy the name into place.
+    // (The arrays are both 17 bytes long)
     lda p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_PROCESS_NAME
     sta.z pn
     lda p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_PROCESS_NAME+1
@@ -403,16 +402,15 @@ initialise_pdb: {
     jmp __b2
   !__b2:
     // Set process state as not running.
-    //XXX - Put the value STATE_NOTRUNNING into p->process_state
+    // Put the value STATE_NOTRUNNING into p->process_state
     lda #STATE_NOTRUNNING
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_PROCESS_STATE
     // Set stored memory area
     // (for now, we just use fixed 8KB steps from $30000-$3FFFF
     // corresponding to the PDB number
-    /*XXX - Set p->storage_start_address to the correct start address
-  for a process that is in this PDB.
-  The correct address is $30000 + (((unsigned dword)pdb_number)*$2000);
-  */
+    // Set p->storage_start_address to the correct start address
+    // for a process that is in this PDB.
+    // The correct address is $30000 + (((unsigned dword)pdb_number)*$2000);
     lda #<$30000
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_START_ADDRESS
     lda #>$30000
@@ -421,10 +419,9 @@ initialise_pdb: {
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_START_ADDRESS+2
     lda #>$30000>>$10
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_START_ADDRESS+3
-    /*XXX - Then do the same for the end address of the process
-  This gets stored into p->storage_end_address and the correct
-  address is $31FFF + (((unsigned dword)pdb_number)*$2000);
-  */
+    // Then do the same for the end address of the process
+    // This gets stored into p->storage_end_address and the correct
+    // address is $31FFF + (((unsigned dword)pdb_number)*$2000);
     lda #<$31fff
     sta p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORAGE_END_ADDRESS
     lda #>$31fff
@@ -449,9 +446,9 @@ initialise_pdb: {
     lda p+OFFSET_STRUCT_PROCESS_DESCRIPTOR_BLOCK_STORED_STATE+1
     sta.z ss+1
     ldy #0
-  /*XXX - Set all 64 bytes of the array 'ss' to zero, to clear the context
-  switching state
-  */
+  // Set all 64 bytes of the array 'ss' to zero, to clear the context
+  // switching state
+  //
   __b4:
     cpy #$3f
     bcc __b5
@@ -466,7 +463,7 @@ initialise_pdb: {
     lda #>$d645
     adc.z ss+1
     sta.z __19+1
-    /*XXX - Set the stack pointer to $01FF
+    /* Set the stack pointer to $01FF
   (This requires a bit of fiddly pointer arithmetic, so to save you 
   the trouble working it out, you can use the following as the left 
   side of the expression:   *(unsigned short *)&ss[x] = ...
@@ -489,7 +486,7 @@ initialise_pdb: {
     adc #>$d648
     sta.z __21+1
     /*
-  XXX - Set the program counter to $080D
+  Set the program counter to $080D
   (This requires a bit of fiddly pointer arithmetic, so to save you 
   the trouble working it out, you can use the following as the left 
   side of the expression:   *(unsigned short *)&ss[x] = ...
