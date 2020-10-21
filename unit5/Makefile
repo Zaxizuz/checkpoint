@@ -22,7 +22,7 @@ packed.bin:	program1.prg program2.prg program3.prg program4.prg pack
 	./pack program1.prg program2.prg program3.prg program4.prg
 
 test5.1:	os5.1.bin packed.bin
-	./check_if_committed && xmega65 -loadrom packed.bin -kickup os5.1.bin
+	xmega65 -loadrom packed.bin -kickup os5.1.bin
 
 os5.1.bin:	os5.1.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<
@@ -40,7 +40,7 @@ os5.3.bin:	os5.3.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<
 
 test5.4:	os5.4.bin packed.bin
-	./check_if_committed && xmega65 -loadrom packed.bin -kickup os5.4.bin
+	xmega65 -loadrom packed.bin -kickup os5.4.bin
 
 os5.4.bin:	os5.4.kc
 	${HOME}/OSStudentMaterial/kickc/bin/kickc.sh -a $<

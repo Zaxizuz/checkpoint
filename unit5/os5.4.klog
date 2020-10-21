@@ -3,8 +3,8 @@ flex pass 1
 flex pass 2
 flex pass 3
 Output pass
-Writing prg file: os5.3.bin
-Writing prg file: /home/student/repo/unit5/os5.3.prg
+Writing prg file: os5.4.bin
+Writing prg file: /home/student/repo/unit5/os5.4.prg
 
 Memory Map
 ----------
@@ -17,13 +17,13 @@ Syscall-segment:
   $8000-$811f Syscall
 
 Code-segment:
-  $8200-$8ae4 Code
+  $8200-$8d87 Code
 
 Data-segment:
-  $8ae5-$8ba5 Data
+  $8d88-$8e77 Data
 
 Stack-segment:
 
 Zeropage-segment:
 
-Writing Vice symbol file: /home/student/repo/unit5/os5.3.vs
+Writing Vice symbol file: /home/student/repo/unit5/os5.4.vs
