@@ -651,21 +651,14 @@ void syscall09(){
 
 }
 void syscall0A(){
+	struct ipc_message *m=$0300;
 	struct process_descriptor_block *pdb
 		=(struct process_descriptor_block*)
 		((unsigned short)stored_pdbs+(((unsigned short) running_pdb)<<8));
 		unsigned char caller_pid = pdb->process_id;
-		
-		unsigned char message_id=get_next_message_id(caller_pid);
-		
-		if (message_id!=0xFF){
-			// We have a message to return
-			struct ipc_message *m=get_pointer_to_message(message_id);
 				
-			queue_message(pdb->process_id,1,1,1,$0300);	
-		}	
-
-	
+	queue_message(caller_pid,m->to,m->priority,m->sequence,m->message);	
+			
 	exit_hypervisor();
 
 }
@@ -738,9 +731,6 @@ void reset(){
   memset(SCREEN, ' ', 40*25);
   memset(COLS, WHITE, 40*25);
     
-  current_screen_line = SCREEN;
-  print_newline();
-  
   // Start with empty message queue
   ipc_message_count=0;
   
@@ -748,22 +738,20 @@ void reset(){
   // Create message from PID 0 (OS) to PID 1
   // queue_message(0,1,1,1,"cpoint 6.1   ");
   
-  // os6.2.kc
-  initialise_pdb(1,"program2.prg");
-  
   // Initialise PDB slot 0 to hold program1
   initialise_pdb(0,"program1.prg");
-  
-  // Load the program
   load_program(0);
+  
+  // os6.2.kc
+  initialise_pdb(1,"program2.prg");
   load_program(1);
   resume_pdb(1);
+  
   
   // os6.1.kc
   // Run the program
   // resume_pdb(0);
-  
-  exit_hypervisor();
+
 }
 
 #pragma data_seg(Syscall)    
