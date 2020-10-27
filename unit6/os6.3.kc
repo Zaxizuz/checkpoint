@@ -546,6 +546,8 @@ void dequeue_message(unsigned char message_num)
 {
 	if (message_num>=ipc_message_count) return;
 	if (message_num==(ipc_message_count-1)){
+		byte *last =(byte *)ipc_messages;
+		for(byte i=0;i<16;i++) last[i]=$ff;
 		ipc_message_count--;
 	  return;
 	}		
@@ -553,8 +555,9 @@ void dequeue_message(unsigned char message_num)
 		((unsigned short)ipc_messages+message_num*16);
 	unsigned char *src=(unsigned char*)
 	  ((unsigned short)ipc_messages+(ipc_message_count-1)*16);
-	for(unsigned char i=0;i<16;i++)
-		dest[i]=src[i];
+	for(unsigned char i=0;i<16;i++) dest[i]=src[i];
+	for(unsigned char i=0;i<16;i++) src[i]=$ff;	
+		
 	ipc_message_count--;
 
 }
