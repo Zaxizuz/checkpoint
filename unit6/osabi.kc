@@ -86,12 +86,19 @@ void ipc_send(unsigned char to, unsigned char priority,
  				      unsigned char sequence_number, unsigned char *message){
 
 	// Copy message to transfer area
-	unsigned char *a=(unsigned char *)&message;
+	unsigned char *a=(unsigned char *)message;
 	unsigned char *b=(unsigned char *)$0300;
 	
-	for (unsigned char i=0;i<16;i++)
-		b[i]=a[i];
+	*b++=$ff;
+	*b++=to;
+	*b++=priority;
+	*b++=sequence_number;
+		
+	while (*a){
+		*b++ = *a++;
+	}
 	
+	*b=0;
 	
 	enable_syscalls();
 	*(unsigned char *)$D64A = $00;
