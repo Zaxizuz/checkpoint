@@ -18,8 +18,6 @@ const char BLACK = 0;
 const char BLUE = 6;
 const char WHITE = 1;
 
-char[] MESSAGE = "            by sen lin";
-
 const unsigned char STATE_NOTRUNNING = $00;
 const unsigned char STATE_NEW = $01;
 const unsigned char STATE_READY = $02;
@@ -82,8 +80,8 @@ unsigned char next_free_pid()
     stepped=0;
     for(i=0;i<8;i++) {
       struct process_descriptor_block *p
-	=(struct process_descriptor_block*)((unsigned short)stored_pdbs+(i<<8));
-      if (pid==p->process_id) { pid++; stepped=1; }
+				=(struct process_descriptor_block*)((unsigned short)stored_pdbs+(i<<8));
+      if (pid==p->process_id){ pid++; stepped=1; }
     }
   }
   
@@ -652,7 +650,25 @@ void syscall09(){
 		}
 
 }
-void syscall0A(){exit_hypervisor();}
+void syscall0A(){
+	struct process_descriptor_block *pdb
+		=(struct process_descriptor_block*)
+		((unsigned short)stored_pdbs+(((unsigned short) running_pdb)<<8));
+		unsigned char caller_pid = pdb->process_id;
+		
+		unsigned char message_id=get_next_message_id(caller_pid);
+		
+		if (message_id!=0xFF){
+			// We have a message to return
+			struct ipc_message *m=get_pointer_to_message(message_id);
+				
+			queue_message(pdb->process_id,1,1,1,$0300);	
+		}	
+
+	
+	exit_hypervisor();
+
+}
 void securentr(){exit_hypervisor();}
 void securexit(){exit_hypervisor();}
 void syscall0D(){exit_hypervisor();}
@@ -723,23 +739,29 @@ void reset(){
   memset(COLS, WHITE, 40*25);
     
   current_screen_line = SCREEN;
-  print_to_screen(MESSAGE);
   print_newline();
   
   // Start with empty message queue
   ipc_message_count=0;
   
+  // os6.1.kc
   // Create message from PID 0 (OS) to PID 1
-  queue_message(0,1,1,1,"cpoint 6.1   ");
+  // queue_message(0,1,1,1,"cpoint 6.1   ");
+  
+  // os6.2.kc
+  initialise_pdb(1,"program2.prg");
   
   // Initialise PDB slot 0 to hold program1
   initialise_pdb(0,"program1.prg");
   
   // Load the program
   load_program(0);
+  load_program(1);
+  resume_pdb(1);
   
+  // os6.1.kc
   // Run the program
-  resume_pdb(0);
+  // resume_pdb(0);
   
   exit_hypervisor();
 }
