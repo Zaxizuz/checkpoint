@@ -522,7 +522,7 @@ struct ipc_message {
 
 // We will have 16 slots of 16 bytes at $CB00-$CBFF
 const unsigned char *ipc_messages = $CB00;
-volatile unsigned char ipc_message_count;
+volatile unsigned char ipc_message_count=1;
 void queue_message(unsigned char from, unsigned char to,
  									 unsigned char priority,unsigned char sequence,
  									 unsigned char *message)
@@ -540,7 +540,7 @@ void queue_message(unsigned char from, unsigned char to,
 	for (unsigned char i=0;i<12;i++)
 		m->message[i]=message[i];
 		
-	ipc_message_count=1;
+	ipc_message_count++;	
 }
 void dequeue_message(unsigned char message_num)
 {
@@ -738,20 +738,21 @@ void reset(){
   // Create message from PID 0 (OS) to PID 1
   // queue_message(0,1,1,1,"cpoint 6.1   ");
   
-  // Initialise PDB slot 0 to hold program1
-  initialise_pdb(0,"program1.prg");
+  // Initialise PDB slot 0 to hold program3
+  initialise_pdb(0,"program3.prg");
   load_program(0);
   
-  // os6.2.kc
-  initialise_pdb(1,"program2.prg");
+  // Initialise PDB slot 1 to hold program4
+  initialise_pdb(1,"program4.prg");
   load_program(1);
-  resume_pdb(1);
+  resume_pdb(0);
   
   
   // os6.1.kc
   // Run the program
   // resume_pdb(0);
-
+  
+	exit_hypervisor();
 }
 
 #pragma data_seg(Syscall)    
