@@ -49,10 +49,16 @@ void wu7_examine_file_system(void)
   // Complexity guide: My solution was 6 lines long.
 
  
-  // Read the forst sector of the SD card, which contains the Master Boot Record 
+  // Read the first sector of the SD card, which contains the Master Boot Record 
+  
+  int pointer=0x1BE;
   sdcard_readsector(0);
-  p_start = extract_uint32(0x01BE);
-  p_size = extract_uint32(0xC);
+  while (extract_uint32(pointer + 0x04)!=0x0C)
+  {
+     pointer = pointer + 0x10; 
+  }
+  p_start = extract_uint32((pointer + 0x08));
+  p_size = extract_uint32((pointer + 0x0C));
 
   // Then read the first sector of the FAT32 partition, and use extract_uint32(), extract_uint16()
   // or simply reading bytes from sector_buffer[] to get the values for:
@@ -61,6 +67,13 @@ void wu7_examine_file_system(void)
   // and f_clusters (this last one can be calculated simple as the number of sectors per fat multiplied
   // by the number of 32-bit values (i.e., 4 bytes long each) that can be packed into a 512 byte sector).
   // Complexity guide: My solution was 11 lines long.
+
+	sdcard_readsector(1);
+	f_sectors_per_fat = extract_uint32(0x016);
+	//f_rootdir_cluster
+	f_reserved_sectors = extract_uint32(0x00E);
+	//f_sectors_per_cluster 
+
 
   //f_fat1_sector
   //f_fat2_sector
