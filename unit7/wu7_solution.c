@@ -47,14 +47,10 @@ void wu7_examine_file_system(void)
   // will be 0x0c), and then use extract_uint32() to get the start and size of the partition
   // into p_start and p_size.
   // Complexity guide: My solution was 6 lines long.
-
- 
-  // Read the first sector of the SD card, which contains the Master Boot Record 
   
   int pointer=0x1BE;
   sdcard_readsector(0);
-  while (extract_uint32(pointer + 0x04)!=0x0C)
-  {
+  while (extract_uint32(pointer + 0x04)!=0x0C){
      pointer = pointer + 0x10; 
   }
   p_start = extract_uint32((pointer + 0x08));
@@ -68,19 +64,17 @@ void wu7_examine_file_system(void)
   // by the number of 32-bit values (i.e., 4 bytes long each) that can be packed into a 512 byte sector).
   // Complexity guide: My solution was 11 lines long.
 
-	sdcard_readsector(1);
-	f_sectors_per_fat = extract_uint32(0x016);
-	//f_rootdir_cluster
-	f_reserved_sectors = extract_uint32(0x00E);
-	//f_sectors_per_cluster 
+	sdcard_readsector(p_start);
+	f_sectors_per_fat = extract_uint32(0x024);
+	f_rootdir_cluster = extract_uint32(0x02C);
+	f_reserved_sectors = extract_uint16(0x00E);
+	f_sectors_per_cluster = extract_uint32(0x00D); 
 
 
-  //f_fat1_sector
-  //f_fat2_sector
-  //f_rootdir_sector
-  //f_clusters
-
-
+  f_fat1_sector = p_start + f_reserved_sectors;
+  f_fat2_sector = (p_start + f_reserved_sectors + f_sectors_per_fat) ;
+  f_rootdir_sector = (p_start + f_reserved_sectors + f_sectors_per_fat * 2 ) ;
+  f_clusters =f_sectors_per_fat * 128;
 
 }
 
