@@ -70,7 +70,6 @@ void wu7_examine_file_system(void)
 	f_reserved_sectors = extract_uint16(0x00E);
 	f_sectors_per_cluster = extract_uint32(0x00D); 
 
-
   f_fat1_sector = p_start + f_reserved_sectors;
   f_fat2_sector = (p_start + f_reserved_sectors + f_sectors_per_fat) ;
   f_rootdir_sector = (p_start + f_reserved_sectors + f_sectors_per_fat * 2 ) ;
@@ -91,6 +90,11 @@ void my_opendir(void)
   // how many sectors in a cluster, and add one less than that to the starting
   // sector of the root directory.
   // Complexity guide: My solution was 3 lines long.
+  
+  dir_sector = f_rootdir_sector;
+  dir_sector_max = f_rootdir_sector + f_sectors_per_cluster - 1;
+  dir_sector_offset = 0x00;
+ 
 }
 
 struct my_dirent return_structure;
@@ -107,6 +111,23 @@ struct my_dirent *my_readdir(void)
   // you go past the end of dir_sector_max.
   // Complexity guide: My solution was 11 lines long.
   
+  int found = 0;
+  while (dir_sector<dir_sector_max){
+  	sdcard_readsector(dir_sector);
+  	while (dir_sector_offset<0x200){ // 512 bytes each sector
+  		if (sector_buffer[dir_sector_offset] !=0x00 || sector_buffer[dir_sector_offset] !=0xe5){
+  			found=1;
+  		}
+  		if (found==1) break;
+  		dir_sector_offset = dir_sector_offset + 0x0020; // 32 bytes 
+  	}
+  	if (found==1) break;
+  	dir_sector_offset = 0;
+  	dir_sector = dir_sector + 1;
+  		
+  }
+  if (found==0) return NULL; 
+   
   // At this point you have the directory entry located at offset dir_sector_offset in
   // sector_buffer[]. You can now use the convenience functions extract_uint32(), extract_uint16()
   // and extract_filename() that I have provided for you to extract the necessary values
@@ -118,12 +139,24 @@ struct my_dirent *my_readdir(void)
   // Your solution will look like a series of return_structure.member=extract....() lines,
   // plus a call to extract_filename().
   // Complexity guide: My solution was 5 lines long.
-
+  
+  extract_filename(dir_sector_offset,return_structure.name);
+  return_structure.attribs = sector_buffer[dir_sector_offset + 0x0b];
+  return_structure.length = extract_uint32(dir_sector_offset + 0x1c);
+	int tempcluster = extract_uint16(dir_sector_offset + 0x14)<<16;
+	return_structure.cluster = tempcluster + extract_uint16(dir_sector_offset + 0x1a); 
+		
   // XXX - Finally, advance dir_sector_offset (and dir_sector if the offset goes past the end
   // of the sector), so that it is pointing at the next directory entry, ready for the next call
   // to this function.
   // Complexity guide: My solution was 5 lines long.
 
+  dir_sector_offset = dir_sector_offset + 0x20;
+  if (dir_sector_offset >=0x0200){
+  	dir_sector_offset=0;
+  	dir_sector = dir_sector + 1;
+  }
+  
   // And really last of all, we return a pointer to the return_structure, which I have done for
   // you here:
   return &return_structure;
